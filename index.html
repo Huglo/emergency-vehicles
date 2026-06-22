@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Emergency Vehicles of the World</title>
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="data:,">
+<meta name="theme-color" content="#f5f6f8">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:        #f5f6f8;
+    --surface:   #ffffff;
+    --surface2:  #e8eaed;
+    --border:    #d1d5db;
+    --amber:     #e08d00;
+    --text:      #111827;
+    --muted:     #6b7280;
+    --ambulance: #dc2626;
+    --fire:      #d97706;
+    --police:    #2563eb;
+    --radius:    16px;
+  }
+
+  html, body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    min-height: 100dvh;
+    overflow-x: hidden;
+  }
+
+  .screen {
+    display: none;
+    min-height: 100dvh;
+    padding: 0 0 40px;
+    animation: fadeIn .22s ease;
+  }
+  .screen.active { display: flex; flex-direction: column; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+  /* ── Loading ── */
+  #screen-loading {
+    align-items: center; justify-content: center; gap: 20px;
+    font-family: 'Nunito', sans-serif; font-size: 1rem; color: var(--muted);
+  }
+  .loader-ring {
+    width: 52px; height: 52px;
+    border: 3px solid var(--surface2); border-top-color: var(--amber);
+    border-radius: 50%; animation: spin 1s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── Top bar ── */
+  .top-bar {
+    display: flex; align-items: center; gap: 12px; padding: 18px 18px 0;
+  }
+  .back-btn {
+    background: var(--surface2); border: none; color: var(--text);
+    width: 48px; height: 48px; border-radius: 50%; font-size: 1.5rem;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; transition: background .15s; -webkit-tap-highlight-color: transparent;
+  }
+  .back-btn:active { background: var(--border); }
+  .top-bar-title {
+    font-family: 'Nunito', sans-serif; font-size: .95rem; font-weight: 800;
+    white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    flex: 1; color: var(--text);
+  }
+
+  /* ── Day strip ── */
+  .day-strip-row {
+    display: flex; align-items: center; gap: 8px; padding: 18px 16px 0;
+  }
+  .day-strip-wrap {
+    flex: 1; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  }
+  .day-strip-wrap::-webkit-scrollbar { display: none; }
+  .day-strip { display: flex; gap: 8px; width: max-content; }
+  .day-pill {
+    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    padding: 8px 14px; border-radius: 99px; background: var(--surface);
+    border: 1.5px solid var(--border); cursor: pointer;
+    transition: background .15s, border-color .15s;
+    -webkit-tap-highlight-color: transparent; min-width: 56px;
+  }
+  .day-pill:active { background: var(--surface2); }
+  .day-pill.active { background: var(--amber); border-color: var(--amber); }
+  .day-pill.active .pill-day,
+  .day-pill.active .pill-date { color: #fff; }
+  .pill-day {
+    font-size: .65rem; font-weight: 600; text-transform: uppercase;
+    letter-spacing: .05em; color: var(--muted);
+  }
+  .pill-date {
+    font-family: 'Nunito', sans-serif; font-size: .95rem;
+    font-weight: 800; color: var(--text);
+  }
+  .tomorrow-btn {
+    flex-shrink: 0; background: var(--surface); border: 1.5px solid var(--border);
+    color: var(--amber); font-family: 'Nunito', sans-serif; font-size: .78rem;
+    font-weight: 800; padding: 8px 12px; border-radius: 99px; cursor: pointer;
+    display: flex; align-items: center; gap: 4px;
+    -webkit-tap-highlight-color: transparent; transition: background .15s; white-space: nowrap;
+  }
+  .tomorrow-btn:active { background: var(--surface2); }
+
+  /* ── Country hero ── */
+  .country-hero {
+    display: flex; flex-direction: column; align-items: center; padding: 24px 24px 20px;
+  }
+  .country-flag-emoji { font-size: 5rem; line-height: 1; margin-bottom: 16px; }
+  .country-name {
+    font-family: 'Nunito', sans-serif; font-size: 2rem; font-weight: 900;
+    text-align: center; line-height: 1.1; margin-bottom: 4px; color: var(--text);
+  }
+  .date-label {
+    font-size: .75rem; color: var(--muted); letter-spacing: .06em;
+    text-transform: uppercase; margin-bottom: 16px;
+  }
+
+  /* ── Map ── */
+  .map-container {
+    width: calc(100% - 36px); margin: 0 18px;
+    height: 180px; border-radius: var(--radius);
+    overflow: hidden; border: 1.5px solid var(--border);
+    position: relative;
+  }
+  #country-map, #tomorrow-map { width: 100%; height: 100%; }
+  .leaflet-container { background: var(--surface2) !important; }
+  .leaflet-control-attribution { display: none !important; }
+  .leaflet-control-zoom { display: none !important; }
+  /* Zoom level buttons overlaid on map */
+  .map-zoom-ctrl {
+    position: absolute; bottom: 8px; right: 8px; z-index: 1000;
+    display: flex; gap: 3px;
+    background: rgba(255,255,255,.88); border-radius: 8px;
+    padding: 3px; box-shadow: 0 1px 4px rgba(0,0,0,.15);
+  }
+  .map-zoom-btn {
+    border: none; background: transparent; cursor: pointer;
+    font-size: .65rem; font-family: 'Nunito', sans-serif; font-weight: 800;
+    color: var(--muted); padding: 4px 7px; border-radius: 6px;
+    -webkit-tap-highlight-color: transparent; transition: background .12s, color .12s;
+    line-height: 1;
+  }
+  .map-zoom-btn.active { background: var(--amber); color: #fff; }
+  .map-zoom-btn:active { opacity: .75; }
+
+  /* ── Vehicle cards ── */
+  .vehicle-cards { width: 100%; display: flex; flex-direction: column; gap: 11px; padding: 16px 18px 0; }
+  .vehicle-card {
+    background: var(--surface); border: 1.5px solid var(--border);
+    border-radius: var(--radius); padding: 18px; display: flex; align-items: center;
+    gap: 16px; cursor: pointer; transition: border-color .15s, background .15s;
+    -webkit-tap-highlight-color: transparent; position: relative; overflow: hidden;
+  }
+  .vehicle-card::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 4px; border-radius: 4px 0 0 4px;
+  }
+  .vehicle-card.ambulance::before { background: var(--ambulance); }
+  .vehicle-card.fire::before      { background: var(--fire); }
+  .vehicle-card.police::before    { background: var(--police); }
+  .vehicle-card:active { background: var(--surface2); }
+  .vehicle-icon { font-size: 2rem; flex-shrink: 0; }
+  .vehicle-card-info { flex: 1; }
+  .vehicle-card-label { font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 800; color: var(--text); }
+  .cached-dot { width: 7px; height: 7px; border-radius: 50%; background: #16a34a; flex-shrink: 0; display: none; }
+  .cached-dot.visible { display: block; }
+  .vehicle-card-arrow { color: var(--muted); font-size: 1.1rem; }
+
+  /* ── Gallery ── */
+  .gallery-meta { padding: 12px 18px 10px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .gallery-type-badge {
+    display: inline-flex; align-items: center; gap: 5px; padding: 4px 11px;
+    border-radius: 99px; font-size: .72rem; font-weight: 600;
+    text-transform: uppercase; letter-spacing: .06em;
+  }
+  .badge-ambulance { background: rgba(220,38,38,.1);  color: var(--ambulance); }
+  .badge-fire      { background: rgba(217,119,6,.1);  color: var(--fire); }
+  .badge-police    { background: rgba(37,99,235,.1);  color: var(--police); }
+  .cache-badge { font-size: .68rem; color: #16a34a; display: none; }
+  .cache-badge.visible { display: inline; }
+  .gallery-title-block { padding: 0 18px 16px; }
+  .gallery-title-block h2 {
+    font-family: 'Nunito', sans-serif; font-size: 1.45rem; font-weight: 900; line-height: 1.15; color: var(--text);
+  }
+  .image-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 9px; padding: 0 14px; }
+  .image-thumb {
+    aspect-ratio: 4/3; border-radius: 12px; overflow: hidden;
+    cursor: zoom-in; background: var(--surface2);
+  }
+  .image-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform .18s; }
+  .image-thumb:active img { transform: scale(.96); }
+  .thumb-skeleton {
+    aspect-ratio: 4/3; border-radius: 12px;
+    background: linear-gradient(90deg, var(--surface2) 25%, var(--border) 50%, var(--surface2) 75%);
+    background-size: 200% 100%; animation: shimmer 1.3s infinite;
+  }
+  @keyframes shimmer { to { background-position: -200% 0; } }
+  .img-error {
+    width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 5px; color: var(--muted); font-size: .68rem; text-align: center; padding: 8px;
+  }
+  .no-results { grid-column: 1/-1; text-align: center; padding: 40px 24px; color: var(--muted); }
+  .no-results .emoji { font-size: 2.2rem; margin-bottom: 10px; }
+
+  /* ── Lightbox with swipe ── */
+  #lightbox {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.93); z-index: 999;
+    flex-direction: column; animation: fadeIn .16s ease;
+  }
+  #lightbox.open { display: flex; }
+  .lb-top-bar {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 18px 18px 8px; flex-shrink: 0;
+  }
+  .lb-counter {
+    font-family: 'Nunito', sans-serif; font-size: .9rem; font-weight: 700; color: rgba(255,255,255,.7);
+  }
+  /* Swipe area */
+  .lb-swipe-area {
+    flex: 1; position: relative; overflow: hidden; min-height: 0;
+    touch-action: pan-y pinch-zoom; /* allow vertical scroll & pinch, intercept horizontal in JS */
+    cursor: zoom-out;
+  }
+  /* Track holds all images side by side */
+  .lb-track {
+    display: flex; height: 100%;
+    transition: transform .28s cubic-bezier(.4,0,.2,1);
+    will-change: transform;
+  }
+  .lb-slide {
+    flex: 0 0 100%; height: 100%;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 8px 16px;
+    pointer-events: none; /* taps handled by swipe-area */
+  }
+  .lb-slide img {
+    max-width: 100%; max-height: 100%;
+    object-fit: contain; border-radius: 8px;
+    user-select: none; -webkit-user-drag: none;
+  }
+  /* Dot indicators */
+  .lb-dots {
+    display: flex; justify-content: center; gap: 6px;
+    padding: 8px 0 16px; flex-shrink: 0;
+  }
+  .lb-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: rgba(255,255,255,.3); transition: background .2s;
+  }
+  .lb-dot.active { background: #fff; }
+
+  /* ── Tomorrow screen ── */
+  #screen-tomorrow .country-hero { padding-top: 32px; }
+  .tomorrow-label {
+    font-size: .7rem; color: var(--amber); font-weight: 700;
+    letter-spacing: .1em; text-transform: uppercase; margin-bottom: 12px;
+  }
+  .tomorrow-map-wrap {
+    width: calc(100% - 36px); margin: 8px 18px 0;
+    height: 220px; border-radius: var(--radius);
+    overflow: hidden; border: 1.5px solid var(--border);
+  }
+
+  .attrib { text-align: center; font-size: .65rem; color: var(--muted); padding: 18px 16px 0; }
+</style>
+</head>
+<body>
+
+<div id="screen-loading" class="screen active">
+  <div class="loader-ring"></div>
+  <span>Loading…</span>
+</div>
+
+<div id="screen-country" class="screen">
+  <div class="day-strip-row">
+    <div class="day-strip-wrap">
+      <div class="day-strip" id="day-strip"></div>
+    </div>
+    <button class="tomorrow-btn" onclick="goTomorrow()">Tomorrow ›</button>
+  </div>
+  <div class="country-hero">
+    <div id="country-flag" class="country-flag-emoji"></div>
+    <div class="country-name" id="country-name"></div>
+    <div class="date-label" id="date-label"></div>
+  </div>
+  <div class="map-container">
+    <div id="country-map"></div>
+    <div class="map-zoom-ctrl">
+      <button class="map-zoom-btn" onclick="setMapZoom(2)" data-zoom="2">🌍</button>
+      <button class="map-zoom-btn active" onclick="setMapZoom(4)" data-zoom="4">🗺</button>
+      <button class="map-zoom-btn" onclick="setMapZoom(6)" data-zoom="6">📍</button>
+    </div>
+  </div>
+  <div class="vehicle-cards">
+    <div class="vehicle-card ambulance" onclick="goVehicle('ambulance')">
+      <div class="vehicle-icon">🚑</div>
+      <div class="vehicle-card-info">
+        <div class="vehicle-card-label">Ambulance</div>
+      </div>
+      <div class="cached-dot" id="dot-ambulance"></div>
+      <div class="vehicle-card-arrow">›</div>
+    </div>
+    <div class="vehicle-card fire" onclick="goVehicle('fire')">
+      <div class="vehicle-icon">🚒</div>
+      <div class="vehicle-card-info">
+        <div class="vehicle-card-label">Fire Engine</div>
+      </div>
+      <div class="cached-dot" id="dot-fire"></div>
+      <div class="vehicle-card-arrow">›</div>
+    </div>
+    <div class="vehicle-card police" onclick="goVehicle('police')">
+      <div class="vehicle-icon">🚔</div>
+      <div class="vehicle-card-info">
+        <div class="vehicle-card-label">Police Car</div>
+      </div>
+      <div class="cached-dot" id="dot-police"></div>
+      <div class="vehicle-card-arrow">›</div>
+    </div>
+  </div>
+</div>
+
+<div id="screen-gallery" class="screen">
+  <div class="top-bar">
+    <button class="back-btn" onclick="goBack()">‹</button>
+    <span class="top-bar-title" id="gallery-country-name"></span>
+  </div>
+  <div class="gallery-meta">
+    <span id="gallery-badge" class="gallery-type-badge"></span>
+    <span id="gallery-cache-badge" class="cache-badge">● cached</span>
+  </div>
+  <div class="gallery-title-block"><h2 id="gallery-title"></h2></div>
+  <div class="image-grid" id="image-grid"></div>
+
+</div>
+
+<div id="screen-tomorrow" class="screen">
+  <div class="top-bar">
+    <button class="back-btn" onclick="goBack()">‹</button>
+    <span class="top-bar-title">Coming Tomorrow</span>
+  </div>
+  <div class="country-hero">
+    <div class="tomorrow-label" style="display:none;"></div>
+    <div id="tomorrow-flag" class="country-flag-emoji"></div>
+    <div class="country-name" id="tomorrow-name"></div>
+    <div class="date-label" id="tomorrow-date"></div>
+  </div>
+  <div class="tomorrow-map-wrap" style="position:relative;">
+    <div id="tomorrow-map"></div>
+    <div class="map-zoom-ctrl">
+      <button class="map-zoom-btn" onclick="setTomorrowMapZoom(2)" data-tzoom="2">🌍</button>
+      <button class="map-zoom-btn active" onclick="setTomorrowMapZoom(4)" data-tzoom="4">🗺</button>
+      <button class="map-zoom-btn" onclick="setTomorrowMapZoom(6)" data-tzoom="6">📍</button>
+    </div>
+  </div>
+</div>
+
+<!-- Lightbox with swipeable track -->
+<div id="lightbox">
+  <div class="lb-top-bar">
+    <button class="back-btn" style="background:rgba(255,255,255,.15);color:#fff;" onclick="goBack()">‹</button>
+    <span class="lb-counter" id="lb-counter"></span>
+  </div>
+  <div class="lb-swipe-area" id="lb-swipe-area" onclick="handleLightboxTap(event)">
+    <div class="lb-track" id="lb-track"></div>
+  </div>
+  <div class="lb-dots" id="lb-dots"></div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────
+// Pull-to-refresh: cancel only downward pull at page top
+// ─────────────────────────────────────────────
+(function() {
+  let startY = 0;
+  document.addEventListener('touchstart', e => { startY = e.touches[0].clientY; }, { passive: true });
+  document.addEventListener('touchmove', e => {
+    if (e.touches[0].clientY - startY > 0 && window.scrollY === 0) e.preventDefault();
+  }, { passive: false });
+})();
+
+// ─────────────────────────────────────────────
+// CONFIG
+// ─────────────────────────────────────────────
+const LAUNCH_DATE   = new Date(2026, 5, 21);
+const MAX_DAYS_BACK = 2; // today + 2 previous days
+
+// ─────────────────────────────────────────────
+// COUNTRIES
+// ─────────────────────────────────────────────
+const COUNTRIES = [
+  { name: "Afghanistan",               code: "af", lat: 33.93,  lng: 67.71   },
+  { name: "Albania",                   code: "al", lat: 41.15,  lng: 20.17   },
+  { name: "Algeria",                   code: "dz", lat: 28.03,  lng: 1.66    },
+  { name: "Andorra",                   code: "ad", lat: 42.55,  lng: 1.60    },
+  { name: "Angola",                    code: "ao", lat: -11.20, lng: 17.87   },
+  { name: "Antigua and Barbuda",       code: "ag", lat: 17.06,  lng: -61.80  },
+  { name: "Argentina",                 code: "ar", lat: -38.42, lng: -63.62  },
+  { name: "Armenia",                   code: "am", lat: 40.07,  lng: 45.04   },
+  { name: "Australia",                 code: "au", lat: -25.27, lng: 133.78  },
+  { name: "Austria",                   code: "at", lat: 47.52,  lng: 14.55   },
+  { name: "Azerbaijan",                code: "az", lat: 40.14,  lng: 47.58   },
+  { name: "Bahamas",                   code: "bs", lat: 25.03,  lng: -77.40  },
+  { name: "Bahrain",                   code: "bh", lat: 26.00,  lng: 50.55   },
+  { name: "Bangladesh",                code: "bd", lat: 23.68,  lng: 90.36   },
+  { name: "Barbados",                  code: "bb", lat: 13.19,  lng: -59.54  },
+  { name: "Belarus",                   code: "by", lat: 53.71,  lng: 27.95   },
+  { name: "Belgium",                   code: "be", lat: 50.50,  lng: 4.47    },
+  { name: "Belize",                    code: "bz", lat: 17.19,  lng: -88.50  },
+  { name: "Benin",                     code: "bj", lat: 9.31,   lng: 2.32    },
+  { name: "Bhutan",                    code: "bt", lat: 27.51,  lng: 90.43   },
+  { name: "Bolivia",                   code: "bo", lat: -16.29, lng: -63.59  },
+  { name: "Bosnia and Herzegovina",    code: "ba", lat: 43.92,  lng: 17.68   },
+  { name: "Botswana",                  code: "bw", lat: -22.33, lng: 24.68   },
+  { name: "Brazil",                    code: "br", lat: -14.24, lng: -51.93  },
+  { name: "Brunei",                    code: "bn", lat: 4.54,   lng: 114.73  },
+  { name: "Bulgaria",                  code: "bg", lat: 42.73,  lng: 25.49   },
+  { name: "Burkina Faso",              code: "bf", lat: 12.36,  lng: -1.53   },
+  { name: "Burundi",                   code: "bi", lat: -3.37,  lng: 29.92   },
+  { name: "Cabo Verde",                code: "cv", lat: 16.00,  lng: -24.01  },
+  { name: "Cambodia",                  code: "kh", lat: 12.57,  lng: 104.99  },
+  { name: "Cameroon",                  code: "cm", lat: 3.85,   lng: 11.50   },
+  { name: "Canada",                    code: "ca", lat: 56.13,  lng: -106.35 },
+  { name: "Central African Republic",  code: "cf", lat: 6.61,   lng: 20.94   },
+  { name: "Chad",                      code: "td", lat: 15.45,  lng: 18.73   },
+  { name: "Chile",                     code: "cl", lat: -35.68, lng: -71.54  },
+  { name: "China",                     code: "cn", lat: 35.86,  lng: 104.20  },
+  { name: "Colombia",                  code: "co", lat: 4.57,   lng: -74.30  },
+  { name: "Comoros",                   code: "km", lat: -11.64, lng: 43.33   },
+  { name: "Congo (Brazzaville)",       code: "cg", lat: -0.23,  lng: 15.83   },
+  { name: "Congo (Kinshasa)",          code: "cd", lat: -4.04,  lng: 21.76   },
+  { name: "Costa Rica",                code: "cr", lat: 9.75,   lng: -83.75  },
+  { name: "Croatia",                   code: "hr", lat: 45.10,  lng: 15.20   },
+  { name: "Cuba",                      code: "cu", lat: 21.52,  lng: -77.78  },
+  { name: "Cyprus",                    code: "cy", lat: 35.13,  lng: 33.43   },
+  { name: "Czech Republic",            code: "cz", lat: 49.82,  lng: 15.47   },
+  { name: "Denmark",                   code: "dk", lat: 56.26,  lng: 9.50    },
+  { name: "Djibouti",                  code: "dj", lat: 11.83,  lng: 42.59   },
+  { name: "Dominica",                  code: "dm", lat: 15.41,  lng: -61.37  },
+  { name: "Dominican Republic",        code: "do", lat: 18.74,  lng: -70.16  },
+  { name: "Ecuador",                   code: "ec", lat: -1.83,  lng: -78.18  },
+  { name: "Egypt",                     code: "eg", lat: 26.82,  lng: 30.80   },
+  { name: "El Salvador",               code: "sv", lat: 13.79,  lng: -88.90  },
+  { name: "Equatorial Guinea",         code: "gq", lat: 1.65,   lng: 10.27   },
+  { name: "Eritrea",                   code: "er", lat: 15.18,  lng: 39.78   },
+  { name: "Estonia",                   code: "ee", lat: 58.60,  lng: 25.01   },
+  { name: "Eswatini",                  code: "sz", lat: -26.52, lng: 31.47   },
+  { name: "Ethiopia",                  code: "et", lat: 9.15,   lng: 40.49   },
+  { name: "Fiji",                      code: "fj", lat: -17.71, lng: 178.07  },
+  { name: "Finland",                   code: "fi", lat: 61.92,  lng: 25.75   },
+  { name: "France",                    code: "fr", lat: 46.23,  lng: 2.21    },
+  { name: "Gabon",                     code: "ga", lat: -0.80,  lng: 11.61   },
+  { name: "Gambia",                    code: "gm", lat: 13.44,  lng: -15.31  },
+  { name: "Georgia",                   code: "ge", lat: 42.32,  lng: 43.36   },
+  { name: "Germany",                   code: "de", lat: 51.17,  lng: 10.45   },
+  { name: "Ghana",                     code: "gh", lat: 7.95,   lng: -1.02   },
+  { name: "Greece",                    code: "gr", lat: 39.07,  lng: 21.82   },
+  { name: "Grenada",                   code: "gd", lat: 12.12,  lng: -61.68  },
+  { name: "Guatemala",                 code: "gt", lat: 15.78,  lng: -90.23  },
+  { name: "Guinea",                    code: "gn", lat: 9.95,   lng: -11.24  },
+  { name: "Guinea-Bissau",             code: "gw", lat: 11.80,  lng: -15.18  },
+  { name: "Guyana",                    code: "gy", lat: 4.86,   lng: -58.93  },
+  { name: "Haiti",                     code: "ht", lat: 18.97,  lng: -72.29  },
+  { name: "Honduras",                  code: "hn", lat: 15.20,  lng: -86.24  },
+  { name: "Hungary",                   code: "hu", lat: 47.16,  lng: 19.50   },
+  { name: "Iceland",                   code: "is", lat: 64.96,  lng: -19.02  },
+  { name: "India",                     code: "in", lat: 20.59,  lng: 78.96   },
+  { name: "Indonesia",                 code: "id", lat: -0.79,  lng: 113.92  },
+  { name: "Iran",                      code: "ir", lat: 32.43,  lng: 53.69   },
+  { name: "Iraq",                      code: "iq", lat: 33.22,  lng: 43.68   },
+  { name: "Ireland",                   code: "ie", lat: 53.41,  lng: -8.24   },
+  { name: "Israel",                    code: "il", lat: 31.05,  lng: 34.85   },
+  { name: "Italy",                     code: "it", lat: 41.87,  lng: 12.57   },
+  { name: "Ivory Coast",               code: "ci", lat: 7.54,   lng: -5.55   },
+  { name: "Jamaica",                   code: "jm", lat: 18.11,  lng: -77.30  },
+  { name: "Japan",                     code: "jp", lat: 36.20,  lng: 138.25  },
+  { name: "Jordan",                    code: "jo", lat: 30.59,  lng: 36.24   },
+  { name: "Kazakhstan",                code: "kz", lat: 48.02,  lng: 66.92   },
+  { name: "Kenya",                     code: "ke", lat: -0.02,  lng: 37.91   },
+  { name: "Kiribati",                  code: "ki", lat: -3.37,  lng: -168.73 },
+  { name: "Kosovo",                    code: "xk", lat: 42.60,  lng: 20.90   },
+  { name: "Kuwait",                    code: "kw", lat: 29.31,  lng: 47.48   },
+  { name: "Kyrgyzstan",                code: "kg", lat: 41.20,  lng: 74.77   },
+  { name: "Laos",                      code: "la", lat: 19.86,  lng: 102.50  },
+  { name: "Latvia",                    code: "lv", lat: 56.88,  lng: 24.60   },
+  { name: "Lebanon",                   code: "lb", lat: 33.85,  lng: 35.86   },
+  { name: "Lesotho",                   code: "ls", lat: -29.61, lng: 28.23   },
+  { name: "Liberia",                   code: "lr", lat: 6.43,   lng: -9.43   },
+  { name: "Libya",                     code: "ly", lat: 26.34,  lng: 17.23   },
+  { name: "Liechtenstein",             code: "li", lat: 47.14,  lng: 9.55    },
+  { name: "Lithuania",                 code: "lt", lat: 55.17,  lng: 23.88   },
+  { name: "Luxembourg",                code: "lu", lat: 49.82,  lng: 6.13    },
+  { name: "Madagascar",                code: "mg", lat: -18.77, lng: 46.87   },
+  { name: "Malawi",                    code: "mw", lat: -13.25, lng: 34.30   },
+  { name: "Malaysia",                  code: "my", lat: 4.21,   lng: 108.96  },
+  { name: "Maldives",                  code: "mv", lat: 3.20,   lng: 73.22   },
+  { name: "Mali",                      code: "ml", lat: 17.57,  lng: -3.99   },
+  { name: "Malta",                     code: "mt", lat: 35.94,  lng: 14.37   },
+  { name: "Marshall Islands",          code: "mh", lat: 7.13,   lng: 171.18  },
+  { name: "Mauritania",                code: "mr", lat: 21.01,  lng: -10.94  },
+  { name: "Mauritius",                 code: "mu", lat: -20.35, lng: 57.55   },
+  { name: "Mexico",                    code: "mx", lat: 23.63,  lng: -102.55 },
+  { name: "Micronesia",                code: "fm", lat: 7.43,   lng: 150.55  },
+  { name: "Moldova",                   code: "md", lat: 47.41,  lng: 28.37   },
+  { name: "Monaco",                    code: "mc", lat: 43.73,  lng: 7.40    },
+  { name: "Mongolia",                  code: "mn", lat: 46.86,  lng: 103.85  },
+  { name: "Montenegro",                code: "me", lat: 42.71,  lng: 19.37   },
+  { name: "Morocco",                   code: "ma", lat: 31.79,  lng: -7.09   },
+  { name: "Mozambique",                code: "mz", lat: -18.67, lng: 35.53   },
+  { name: "Myanmar",                   code: "mm", lat: 21.92,  lng: 95.96   },
+  { name: "Namibia",                   code: "na", lat: -22.96, lng: 18.49   },
+  { name: "Nauru",                     code: "nr", lat: -0.52,  lng: 166.93  },
+  { name: "Nepal",                     code: "np", lat: 28.39,  lng: 84.12   },
+  { name: "Netherlands",               code: "nl", lat: 52.13,  lng: 5.29    },
+  { name: "New Zealand",               code: "nz", lat: -40.90, lng: 174.89  },
+  { name: "Nicaragua",                 code: "ni", lat: 12.87,  lng: -85.21  },
+  { name: "Niger",                     code: "ne", lat: 17.61,  lng: 8.08    },
+  { name: "Nigeria",                   code: "ng", lat: 9.08,   lng: 8.68    },
+  { name: "North Korea",               code: "kp", lat: 40.34,  lng: 127.51  },
+  { name: "North Macedonia",           code: "mk", lat: 41.61,  lng: 21.75   },
+  { name: "Norway",                    code: "no", lat: 60.47,  lng: 8.47    },
+  { name: "Oman",                      code: "om", lat: 21.51,  lng: 55.92   },
+  { name: "Pakistan",                  code: "pk", lat: 30.38,  lng: 69.35   },
+  { name: "Palau",                     code: "pw", lat: 7.51,   lng: 134.58  },
+  { name: "Palestine",                 code: "ps", lat: 31.95,  lng: 35.23   },
+  { name: "Panama",                    code: "pa", lat: 8.54,   lng: -80.78  },
+  { name: "Papua New Guinea",          code: "pg", lat: -6.31,  lng: 143.96  },
+  { name: "Paraguay",                  code: "py", lat: -23.44, lng: -58.44  },
+  { name: "Peru",                      code: "pe", lat: -9.19,  lng: -75.02  },
+  { name: "Philippines",               code: "ph", lat: 12.88,  lng: 121.77  },
+  { name: "Poland",                    code: "pl", lat: 51.92,  lng: 19.15   },
+  { name: "Portugal",                  code: "pt", lat: 39.40,  lng: -8.22   },
+  { name: "Qatar",                     code: "qa", lat: 25.35,  lng: 51.18   },
+  { name: "Romania",                   code: "ro", lat: 45.94,  lng: 24.97   },
+  { name: "Russia",                    code: "ru", lat: 61.52,  lng: 105.32  },
+  { name: "Rwanda",                    code: "rw", lat: -1.94,  lng: 29.87   },
+  { name: "Saint Kitts and Nevis",     code: "kn", lat: 17.36,  lng: -62.78  },
+  { name: "Saint Lucia",               code: "lc", lat: 13.91,  lng: -60.98  },
+  { name: "Saint Vincent & Grenadines",code: "vc", lat: 12.98,  lng: -61.29  },
+  { name: "Samoa",                     code: "ws", lat: -13.76, lng: -172.10 },
+  { name: "San Marino",                code: "sm", lat: 43.94,  lng: 12.46   },
+  { name: "São Tomé and Príncipe",     code: "st", lat: 0.19,   lng: 6.61    },
+  { name: "Saudi Arabia",              code: "sa", lat: 23.89,  lng: 45.08   },
+  { name: "Senegal",                   code: "sn", lat: 14.50,  lng: -14.45  },
+  { name: "Serbia",                    code: "rs", lat: 44.02,  lng: 21.01   },
+  { name: "Seychelles",                code: "sc", lat: -4.68,  lng: 55.49   },
+  { name: "Sierra Leone",              code: "sl", lat: 8.46,   lng: -11.78  },
+  { name: "Singapore",                 code: "sg", lat: 1.35,   lng: 103.82  },
+  { name: "Slovakia",                  code: "sk", lat: 48.67,  lng: 19.70   },
+  { name: "Slovenia",                  code: "si", lat: 46.15,  lng: 14.99   },
+  { name: "Solomon Islands",           code: "sb", lat: -9.65,  lng: 160.16  },
+  { name: "Somalia",                   code: "so", lat: 5.15,   lng: 46.20   },
+  { name: "South Africa",              code: "za", lat: -30.56, lng: 22.94   },
+  { name: "South Korea",               code: "kr", lat: 35.91,  lng: 127.77  },
+  { name: "South Sudan",               code: "ss", lat: 6.88,   lng: 31.31   },
+  { name: "Spain",                     code: "es", lat: 40.46,  lng: -3.75   },
+  { name: "Sri Lanka",                 code: "lk", lat: 7.87,   lng: 80.77   },
+  { name: "Sudan",                     code: "sd", lat: 12.86,  lng: 30.22   },
+  { name: "Suriname",                  code: "sr", lat: 3.92,   lng: -56.03  },
+  { name: "Sweden",                    code: "se", lat: 60.13,  lng: 18.64   },
+  { name: "Switzerland",               code: "ch", lat: 46.82,  lng: 8.23    },
+  { name: "Syria",                     code: "sy", lat: 34.80,  lng: 38.99   },
+  { name: "Taiwan",                    code: "tw", lat: 23.70,  lng: 120.96  },
+  { name: "Tajikistan",                code: "tj", lat: 38.86,  lng: 71.28   },
+  { name: "Tanzania",                  code: "tz", lat: -6.37,  lng: 34.89   },
+  { name: "Thailand",                  code: "th", lat: 15.87,  lng: 100.99  },
+  { name: "Timor-Leste",               code: "tl", lat: -8.87,  lng: 125.73  },
+  { name: "Togo",                      code: "tg", lat: 8.62,   lng: 0.82    },
+  { name: "Tonga",                     code: "to", lat: -21.18, lng: -175.20 },
+  { name: "Trinidad and Tobago",       code: "tt", lat: 10.69,  lng: -61.22  },
+  { name: "Tunisia",                   code: "tn", lat: 33.89,  lng: 9.54    },
+  { name: "Turkey",                    code: "tr", lat: 38.96,  lng: 35.24   },
+  { name: "Turkmenistan",              code: "tm", lat: 38.97,  lng: 59.56   },
+  { name: "Tuvalu",                    code: "tv", lat: -7.11,  lng: 177.65  },
+  { name: "Uganda",                    code: "ug", lat: 1.37,   lng: 32.29   },
+  { name: "Ukraine",                   code: "ua", lat: 48.38,  lng: 31.17   },
+  { name: "United Arab Emirates",      code: "ae", lat: 23.42,  lng: 53.85   },
+  { name: "United Kingdom",            code: "gb", lat: 55.38,  lng: -3.44   },
+  { name: "United States",             code: "us", lat: 37.09,  lng: -95.71  },
+  { name: "Uruguay",                   code: "uy", lat: -32.52, lng: -55.77  },
+  { name: "Uzbekistan",                code: "uz", lat: 41.38,  lng: 64.59   },
+  { name: "Vanuatu",                   code: "vu", lat: -15.38, lng: 166.96  },
+  { name: "Vatican City",              code: "va", lat: 41.90,  lng: 12.45   },
+  { name: "Venezuela",                 code: "ve", lat: 6.42,   lng: -66.59  },
+  { name: "Vietnam",                   code: "vn", lat: 14.06,  lng: 108.28  },
+  { name: "Yemen",                     code: "ye", lat: 15.55,  lng: 48.52   },
+  { name: "Zambia",                    code: "zm", lat: -13.13, lng: 27.85   },
+  { name: "Zimbabwe",                  code: "zw", lat: -19.02, lng: 29.15   }
+];
+
+const VEHICLE_CONFIG = {
+  ambulance: { label: "Ambulance",   icon: "🚑", badge: "badge-ambulance", query: c => `${c} ambulance emergency vehicle` },
+  fire:      { label: "Fire Engine", icon: "🚒", badge: "badge-fire",      query: c => `${c} fire engine truck brigade`   },
+  police:    { label: "Police Car",  icon: "🚔", badge: "badge-police",    query: c => `${c} police car vehicle`          }
+};
+
+// ─────────────────────────────────────────────
+// DATE UTILITIES
+// ─────────────────────────────────────────────
+function dateKey(d) {
+  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+}
+function startOfDay(d) { return new Date(d.getFullYear(), d.getMonth(), d.getDate()); }
+function daysBetween(a, b) { return Math.round((startOfDay(b) - startOfDay(a)) / 86400000); }
+const EPOCH = new Date(2024, 0, 1);
+function countryForDate(d) {
+  const idx = daysBetween(EPOCH, d) % COUNTRIES.length;
+  return COUNTRIES[(idx + COUNTRIES.length) % COUNTRIES.length];
+}
+function parseDateKey(str) { const [y,m,d] = str.split('-').map(Number); return new Date(y, m-1, d); }
+function formatDateLong(d) {
+  return d.toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+}
+function formatDayShort(d) { return d.toLocaleDateString('en-GB', { weekday:'short' }).toUpperCase(); }
+
+// ─────────────────────────────────────────────
+// CACHE (localStorage)
+// ─────────────────────────────────────────────
+const CACHE_PREFIX = 'ev_img_';
+function cacheKey(dateStr, countryCode, vehicleType) { return `${CACHE_PREFIX}${dateStr}_${countryCode}_${vehicleType}`; }
+function cacheGet(dateStr, countryCode, vehicleType) {
+  try { const r = localStorage.getItem(cacheKey(dateStr, countryCode, vehicleType)); return r ? JSON.parse(r) : null; }
+  catch(e) { return null; }
+}
+function cacheSet(dateStr, countryCode, vehicleType, data) {
+  try { localStorage.setItem(cacheKey(dateStr, countryCode, vehicleType), JSON.stringify(data)); }
+  catch(e) {
+    try {
+      const keys = Object.keys(localStorage).filter(k => k.startsWith(CACHE_PREFIX)).sort();
+      keys.slice(0, Math.ceil(keys.length / 2)).forEach(k => localStorage.removeItem(k));
+      localStorage.setItem(cacheKey(dateStr, countryCode, vehicleType), JSON.stringify(data));
+    } catch(e2) {}
+  }
+}
+function isCached(dateStr, cc, vt) { return cacheGet(dateStr, cc, vt) !== null; }
+
+// ─────────────────────────────────────────────
+// IMAGE FETCHING — static JSON first, Serper fallback
+// ─────────────────────────────────────────────
+async function fetchImages(vehicleType, countryName, dateStr, countryCode) {
+  // 1. localStorage cache
+  const cached = cacheGet(dateStr, countryCode, vehicleType);
+  if (cached) return { images: cached, fromCache: true };
+
+  // 2. Pre-fetched static JSON (generated by GitHub Action)
+  try {
+    const res = await fetch(`/data/${dateStr}.json`);
+    if (res.ok) {
+      const json = await res.json();
+      const key = `${countryCode}_${vehicleType}`;
+      if (json[key] && json[key].length > 0) {
+        cacheSet(dateStr, countryCode, vehicleType, json[key]);
+        // Also cache the other vehicle types from the same file
+        for (const vt of ['ambulance','fire','police']) {
+          const k = `${countryCode}_${vt}`;
+          if (json[k] && !isCached(dateStr, countryCode, vt)) {
+            cacheSet(dateStr, countryCode, vt, json[k]);
+          }
+        }
+        return { images: json[key], fromCache: false };
+      }
+    }
+  } catch(e) { }
+}
+
+// ─────────────────────────────────────────────
+// FLAG EMOJI
+// ─────────────────────────────────────────────
+function codeToFlagEmoji(code) {
+  if (!code || code === 'xk') return '🏳️';
+  const base = 0x1F1E6 - 'a'.charCodeAt(0);
+  return [...code.toLowerCase()].map(c => String.fromCodePoint(base + c.charCodeAt(0))).join('');
+}
+
+// ─────────────────────────────────────────────
+// MAP
+// ─────────────────────────────────────────────
+let countryMapInstance = null;
+let tomorrowMapInstance = null;
+let currentMapZoom = 4;
+let currentTomorrowMapZoom = 4;
+
+function renderMap(containerId, lat, lng, mapRef, zoom) {
+  if (mapRef && mapRef.remove) mapRef.remove();
+  const el = document.getElementById(containerId);
+  delete el._leaflet_id;
+  const map = L.map(containerId, {
+    center: [lat, lng], zoom: zoom || currentMapZoom,
+    zoomControl: false, attributionControl: false,
+    dragging: false, touchZoom: false,
+    scrollWheelZoom: false, doubleClickZoom: false,
+    boxZoom: false, keyboard: false
+  });
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(map);
+  L.circleMarker([lat, lng], { radius: 7, color: '#e08d00', fillColor: '#e08d00', fillOpacity: 1, weight: 2 }).addTo(map);
+  return map;
+}
+
+function setMapZoom(zoom) {
+  currentMapZoom = zoom;
+  document.querySelectorAll('.map-zoom-btn[data-zoom]').forEach(btn => {
+    btn.classList.toggle('active', parseInt(btn.dataset.zoom) === zoom);
+  });
+  if (selectedCountry) {
+    countryMapInstance = renderMap('country-map', selectedCountry.lat, selectedCountry.lng, countryMapInstance, zoom);
+  }
+}
+
+function setTomorrowMapZoom(zoom) {
+  currentTomorrowMapZoom = zoom;
+  document.querySelectorAll('.map-zoom-btn[data-tzoom]').forEach(btn => {
+    btn.classList.toggle('active', parseInt(btn.dataset.tzoom) === zoom);
+  });
+  const t = new Date(startOfDay(new Date())); t.setDate(t.getDate() + 1);
+  const c = countryForDate(t);
+  tomorrowMapInstance = renderMap('tomorrow-map', c.lat, c.lng, tomorrowMapInstance, zoom);
+}
+
+// ─────────────────────────────────────────────
+// STATE
+// ─────────────────────────────────────────────
+let selectedDate       = startOfDay(new Date());
+let selectedCountry    = null;
+let currentVehicleType = null;
+let lightboxImages     = [];
+let lightboxIndex      = 0;
+
+// ─────────────────────────────────────────────
+// DAY STRIP  (oldest left → today right)
+// ─────────────────────────────────────────────
+function buildDayStrip() {
+  const today = startOfDay(new Date());
+  const strip = document.getElementById('day-strip');
+  strip.innerHTML = '';
+  const days = [];
+  for (let i = MAX_DAYS_BACK; i >= 0; i--) {
+    const d = new Date(today); d.setDate(today.getDate() - i);
+    if (d < LAUNCH_DATE) continue;
+    days.push(d);
+  }
+  days.forEach(d => {
+    const isToday = daysBetween(d, today) === 0;
+    const pill = document.createElement('div');
+    pill.className = 'day-pill' + (isToday ? ' active' : '');
+    pill.dataset.datekey = dateKey(d);
+    pill.innerHTML = `<span class="pill-day">${isToday ? 'Today' : formatDayShort(d)}</span>
+                      <span class="pill-date">${d.getDate()}</span>`;
+    pill.onclick = () => { location.hash = 'day-' + dateKey(d); };
+    strip.appendChild(pill);
+  });
+  setTimeout(() => {
+    const active = strip.querySelector('.day-pill.active');
+    if (active) active.scrollIntoView({ inline: 'end', block: 'nearest' });
+  }, 50);
+}
+
+function activateDayPill(dkStr) {
+  document.querySelectorAll('.day-pill').forEach(p => p.classList.toggle('active', p.dataset.datekey === dkStr));
+}
+
+// ─────────────────────────────────────────────
+// COUNTRY SCREEN
+// ─────────────────────────────────────────────
+function renderCountryScreen() {
+  const c = selectedCountry, ds = dateKey(selectedDate);
+  document.getElementById('country-flag').textContent = codeToFlagEmoji(c.code);
+  document.getElementById('country-name').textContent = c.name;
+  document.getElementById('date-label').textContent = formatDateLong(selectedDate);
+  ['ambulance','fire','police'].forEach(t =>
+    document.getElementById(`dot-${t}`).classList.toggle('visible', isCached(ds, c.code, t))
+  );
+  setTimeout(() => { countryMapInstance = renderMap('country-map', c.lat, c.lng, countryMapInstance, currentMapZoom); }, 50);
+}
+
+// ─────────────────────────────────────────────
+// NAVIGATION
+// ─────────────────────────────────────────────
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function goVehicle(type) { currentVehicleType = type; location.hash = type; }
+function goTomorrow() { location.hash = 'tomorrow'; }
+function goBack() { history.back(); }
+
+async function handleHash() {
+  const hash = location.hash.replace('#','');
+  if (hash.startsWith('day-')) {
+    const dkStr = hash.slice(4);
+    selectedDate = parseDateKey(dkStr);
+    selectedCountry = countryForDate(selectedDate);
+    activateDayPill(dkStr);
+    renderCountryScreen();
+    showScreen('screen-country');
+    return;
+  }
+  if (!hash || hash === 'home') {
+    selectedDate = startOfDay(new Date());
+    selectedCountry = countryForDate(selectedDate);
+    activateDayPill(dateKey(selectedDate));
+    renderCountryScreen();
+    showScreen('screen-country');
+    return;
+  }
+  if (hash === 'tomorrow') { openTomorrow(); return; }
+  if (hash === 'lightbox') return;
+  if (['ambulance','fire','police'].includes(hash)) { currentVehicleType = hash; await openGallery(hash); }
+}
+window.addEventListener('hashchange', handleHash);
+
+// ─────────────────────────────────────────────
+// TOMORROW
+// ─────────────────────────────────────────────
+function openTomorrow() {
+  const t = new Date(startOfDay(new Date())); t.setDate(t.getDate() + 1);
+  const c = countryForDate(t);
+  document.getElementById('tomorrow-flag').textContent = codeToFlagEmoji(c.code);
+  document.getElementById('tomorrow-name').textContent = c.name;
+  document.getElementById('tomorrow-date').textContent = formatDateLong(t);
+  showScreen('screen-tomorrow');
+  setTimeout(() => { tomorrowMapInstance = renderMap('tomorrow-map', c.lat, c.lng, tomorrowMapInstance, currentTomorrowMapZoom); }, 50);
+}
+
+// ─────────────────────────────────────────────
+// GALLERY
+// ─────────────────────────────────────────────
+async function openGallery(type) {
+  const cfg = VEHICLE_CONFIG[type], c = selectedCountry, ds = dateKey(selectedDate);
+  document.getElementById('gallery-country-name').textContent = c.name;
+  document.getElementById('gallery-title').textContent = `${cfg.label} in ${c.name}`;
+  const badge = document.getElementById('gallery-badge');
+  badge.textContent = cfg.icon + '  ' + cfg.label;
+  badge.className = 'gallery-type-badge ' + cfg.badge;
+  const cacheBadge = document.getElementById('gallery-cache-badge');
+  cacheBadge.classList.remove('visible');
+  showScreen('screen-gallery');
+  const grid = document.getElementById('image-grid');
+  grid.innerHTML = Array(6).fill('<div class="thumb-skeleton"></div>').join('');
+  try {
+    const { images, fromCache } = await fetchImages(type, c.name, ds, c.code);
+    cacheBadge.classList.toggle('visible', fromCache);
+    document.getElementById(`dot-${type}`).classList.add('visible');
+    if (!images.length) {
+      grid.innerHTML = `<div class="no-results"><div class="emoji">🔍</div><div>No images found for ${c.name}.</div></div>`;
+      return;
+    }
+    grid.innerHTML = '';
+    images.slice(0,6).forEach((img, i) => {
+      const div = document.createElement('div');
+      div.className = 'image-thumb';
+      div.onclick = () => openLightbox(images, i);
+      const image = document.createElement('img');
+      image.alt = `${cfg.label} in ${c.name}`; image.loading = 'lazy';
+      image.onerror = () => { div.innerHTML = `<div class="img-error">⚠️<br>Unavailable</div>`; };
+      image.src = img.thumb || img.full;
+      div.appendChild(image); grid.appendChild(div);
+    });
+  } catch(err) {
+    grid.innerHTML = `<div class="no-results"><div class="emoji">⚠️</div><div>Could not load images.<br><small>${err.message}</small></div></div>`;
+  }
+}
+
+// ─────────────────────────────────────────────
+// LIGHTBOX  with swipe
+// ─────────────────────────────────────────────
+function openLightbox(images, startIndex) {
+  lightboxImages = images;
+  lightboxIndex  = startIndex;
+
+  // Build slides
+  const track = document.getElementById('lb-track');
+  track.innerHTML = '';
+  images.forEach(img => {
+    const slide = document.createElement('div');
+    slide.className = 'lb-slide';
+    const el = document.createElement('img');
+    el.src = img.full; el.alt = '';
+    slide.appendChild(el);
+    track.appendChild(slide);
+  });
+
+  // Build dots
+  const dotsEl = document.getElementById('lb-dots');
+  dotsEl.innerHTML = '';
+  images.forEach((_, i) => {
+    const dot = document.createElement('div');
+    dot.className = 'lb-dot' + (i === startIndex ? ' active' : '');
+    dotsEl.appendChild(dot);
+  });
+
+  updateLightboxPosition(false);
+  document.getElementById('lightbox').classList.add('open');
+  history.pushState({ lightbox: true }, '', '#lightbox');
+}
+
+function updateLightboxPosition(animate) {
+  const track = document.getElementById('lb-track');
+  track.style.transition = animate ? 'transform .28s cubic-bezier(.4,0,.2,1)' : 'none';
+  track.style.transform = `translateX(${-lightboxIndex * 100}%)`;
+  document.getElementById('lb-counter').textContent = `${lightboxIndex + 1} / ${lightboxImages.length}`;
+  document.querySelectorAll('.lb-dot').forEach((d, i) => d.classList.toggle('active', i === lightboxIndex));
+}
+
+function lightboxGo(delta) {
+  const next = lightboxIndex + delta;
+  if (next < 0 || next >= lightboxImages.length) return;
+  lightboxIndex = next;
+  updateLightboxPosition(true);
+}
+
+function closeLightbox() {
+  const lb = document.getElementById('lightbox');
+  if (!lb.classList.contains('open')) return;
+  lb.classList.remove('open');
+  if (location.hash === '#lightbox') history.back();
+}
+
+// Tap left/right halves to navigate; tap centre column to close
+function handleLightboxTap(e) {
+  const w = e.currentTarget.clientWidth;
+  const x = e.clientX;
+  const zone = w * 0.28; // 28% on each side = navigation zones
+  if (x < zone)       { lightboxGo(-1); }
+  else if (x > w - zone) { lightboxGo(1); }
+  else                { closeLightbox(); }
+}
+
+// Swipe gesture
+(function() {
+  let startX = 0, startY = 0, dragging = false;
+  const area = () => document.getElementById('lb-swipe-area');
+  document.addEventListener('touchstart', e => {
+    if (!document.getElementById('lightbox').classList.contains('open')) return;
+    startX = e.touches[0].clientX; startY = e.touches[0].clientY; dragging = true;
+  }, { passive: true });
+  document.addEventListener('touchmove', e => {
+    if (!dragging || !document.getElementById('lightbox').classList.contains('open')) return;
+    const dx = e.touches[0].clientX - startX;
+    const dy = e.touches[0].clientY - startY;
+    if (Math.abs(dx) > Math.abs(dy)) e.preventDefault(); // horizontal swipe — block scroll
+  }, { passive: false });
+  document.addEventListener('touchend', e => {
+    if (!dragging || !document.getElementById('lightbox').classList.contains('open')) return;
+    dragging = false;
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 40) dx < 0 ? lightboxGo(1) : lightboxGo(-1);
+  }, { passive: true });
+})();
+
+window.addEventListener('popstate', () => {
+  const lb = document.getElementById('lightbox');
+  if (lb.classList.contains('open') && location.hash !== '#lightbox') lb.classList.remove('open');
+});
+
+// ─────────────────────────────────────────────
+// INIT
+// ─────────────────────────────────────────────
+function init() {
+  selectedDate    = startOfDay(new Date());
+  selectedCountry = countryForDate(selectedDate);
+  buildDayStrip();
+  renderCountryScreen();
+  if (!location.hash || location.hash === '#') history.replaceState(null, '', '#home');
+  showScreen('screen-country');
+  const hash = location.hash.replace('#','');
+  if (['ambulance','fire','police'].includes(hash)) { currentVehicleType = hash; openGallery(hash); }
+}
+init();
+</script>
+</body>
+</html>
