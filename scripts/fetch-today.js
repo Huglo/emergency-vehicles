@@ -260,7 +260,7 @@ async function main() {
   const apiKey = process.env.SERPER_KEY;
   if (!apiKey) { console.error('SERPER_KEY env var not set'); process.exit(1); }
 
-  const today = new Date();
+  const today = new Date(Date.now() - 86400000);
   const dk = dateKey(today);
   const country = countryForDate(today);
   console.log(`Fetching images for ${country.name} (${dk})`);
