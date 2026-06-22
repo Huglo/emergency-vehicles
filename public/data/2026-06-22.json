@@ -1,0 +1,80 @@
+{
+  "me_ambulance": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSe4C3d0DlREQwrUK5hLMsKEW9jeDRCt8EfAAaEXl1HMA&s=10",
+      "full": "https://www.eeas.europa.eu/sites/default/files/styles/full_content_width/public/media/2023/viber_slika_2023-07-27_10-09-31-712%20%281%29.jpg?itok=QJXxN7Se"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScxgUYuBS316_2ttxRxnmqqMRCgbxdYbLbd_EN6fOX8w&s=10",
+      "full": "https://c8.alamy.com/comp/E5C8M6/emergency-ambulance-in-kotor-town-montenegro-vehicle-based-on-the-E5C8M6.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmqWg9A8q3gMiIZ3vEZ0khpKPVRKJJtlTAezeHgRJ8wg&s=10",
+      "full": "https://www.shutterstock.com/image-photo/kotor-montenegro-march-22-2026-260nw-2757464661.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTPiaiz-W1A1cYJg9bRwn2NGEix6lpiHc9kGdQ9RwJ5-Q&s=10",
+      "full": "https://www.eeas.europa.eu/sites/default/files/styles/hero_inside_content2/public/media/2023/viber_slika_2023-07-27_10-09-31-451.jpg?itok=kMWHn5iH"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlJPU1CuNRByw3zLiaD78y4Ek_zA-RVoHdZNZpNQ9LQw&s=10",
+      "full": "https://thumbs.dreamstime.com/b/montenegro-ambulance-streets-podgorica-august-335872565.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPmNZ6z3cI9siB8WPBwI0BKjsTYtUur4yvhvwY9vDGVQ&s=10",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/7/75/Ambulance_in_Montenegro_01.jpg"
+    }
+  ],
+  "me_fire": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOezng9Ri5AFzWcv2qMHbGKZ4PZmSepILKrg&s",
+      "full": "https://c8.alamy.com/comp/TATAG8/montenegro-may-3rd-2019-two-kotor-city-fire-brigade-trucks-parked-in-a-small-coastal-town-of-perast-TATAG8.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4TdnFbES37LVkVpH1xvThRah_yCE_QHx6Zw&s",
+      "full": "https://c8.alamy.com/comp/2SXAH8T/a-cat-sitting-under-a-fire-engine-outside-a-fire-station-with-old-buildings-behind-perast-montenegro-2SXAH8T.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTxl3Jg_axjnrThDajDTCgUI7aM2YJphjp4ww&s",
+      "full": "https://previews.123rf.com/images/wolfcub29/wolfcub291901/wolfcub29190100056/122641636-perast-montenegro-november-17-2018-%C3%B0%C2%A1lose-up-fire-trucks-stand-on-the-street-next-to-the-fire.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJOOgH-yKuwuJUConNfQKpjepA23Gqd5EvPw&s",
+      "full": "https://i.ytimg.com/vi/H3QzOHkvUvs/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAAHvy_1a1epOMRoQ3YxULEGdPXTQ"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvZQaZlAOXR40bw1x4RvUVixcj00y432SZMQ&s",
+      "full": "https://c8.alamy.com/comp/2SXAH88/a-cat-sitting-under-a-fire-engine-perast-montenegro-2SXAH88.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR7a-GfS12r19ULHeDDujuxjrn8S6EZo0ZESA&s",
+      "full": "https://c8.alamy.com/comp/2JT1BTK/budva-montenegro-010822-three-red-fire-trucks-stand-near-a-stone-house-2JT1BTK.jpg"
+    }
+  ],
+  "me_police": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ7lh9XobMNnX4hbP0jej1slf1e2rWrF7gQAQ&s",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Police_car_of_Montenegro_01.JPG"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQMxty1gqKyIs7YvjZQwSQDJGlMPY3vLbf9hQ&s",
+      "full": "https://c8.alamy.com/comp/2GY8TR0/podgorica-montenegro-april-21-2019-car-of-the-traffic-police-saobracajna-policija-parked-outside-of-the-police-station-2GY8TR0.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZ2ZGCHV5jK9CPRH3YTXA4BOoeHFJELiy_cw&s",
+      "full": "https://auto-travel.me/wp-content/uploads/2021/11/law-enforcement-in-montenegro.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTUYsxtyAh6Kbz405CRruz1jNuCe7ullnTPjg&s",
+      "full": "https://www.vijesti.me/data/images/2024/07/06/13/5578808_53838935385-77eba66a10-c_ls.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSViCO791IGZYEv_F5AXbcC1xbycUf9pjAadA&s",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Police_car_of_Montenegro_02.JPG"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSkz0LHIjGdVm48raszfR2EoCMg00SwfV8cmg&s",
+      "full": "https://thumbs.dreamstime.com/b/porto-montenegro-montenegro-august-municipal-police-car-city-street-montenegro-porto-montenegro-municipal-police-car-353162095.jpg"
+    }
+  ]
+}
