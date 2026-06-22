@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Runs daily via GitHub Actions.
 // Fetches 18 images (6 per vehicle type) for today's country from Serper,
-// writes public/data/YYYY-MM-DD.json so the site serves them as static files.
+// writes data/YYYY-MM-DD.json so the site serves them as static files.
 
 const https = require('https');
 const fs   = require('fs');
@@ -280,11 +280,11 @@ async function main() {
     await new Promise(r => setTimeout(r, 400));
   }
 
-  const outDir = path.join(process.cwd(), 'public', 'data');
+  const outDir = path.join(process.cwd(), 'data');
   fs.mkdirSync(outDir, { recursive: true });
   const outFile = path.join(outDir, `${dk}.json`);
   fs.writeFileSync(outFile, JSON.stringify(result, null, 2));
-  console.log(`Written: public/data/${dk}.json`);
+  console.log(`Written: data/${dk}.json`);
 }
 
 main().catch(e => { console.error(e); process.exit(1); });
