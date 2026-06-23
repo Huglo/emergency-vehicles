@@ -2,8 +2,8 @@ name: Fetch daily images
 
 on:
   schedule:
-    # Runs at 05:00 UTC every day (well before anyone wakes up)
-    - cron: '0 5 * * *'
+    # Runs at 01:00 UTC every day
+    - cron: '0 1 * * *'
   # Allows manual trigger from the GitHub Actions UI
   workflow_dispatch:
 
