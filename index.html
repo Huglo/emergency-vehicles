@@ -140,19 +140,6 @@
   .leaflet-container { background: var(--surface2) !important; }
   .leaflet-control-attribution { display: none !important; }
   .leaflet-control-zoom { display: none !important; }
-  /* Capital marker: amber pin distinct from generic city labels on the tile layer */
-  .capital-pin-dot {
-    width: 14px; height: 14px; border-radius: 50%;
-    background: var(--amber); border: 2.5px solid #fff;
-    box-shadow: 0 1px 4px rgba(0,0,0,.35);
-  }
-  .leaflet-tooltip.capital-tooltip {
-    background: var(--text); color: #fff;
-    border: none; border-radius: 6px;
-    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: .72rem;
-    padding: 3px 8px; box-shadow: 0 1px 4px rgba(0,0,0,.25);
-  }
-  .leaflet-tooltip.capital-tooltip::before { display: none; }
   /* Zoom level buttons overlaid on map */
   .map-zoom-ctrl {
     position: absolute; bottom: 8px; right: 8px; z-index: 1000;
@@ -192,26 +179,22 @@
   .vehicle-card-arrow { color: var(--muted); font-size: 1.1rem; }
 
   /* ── Gallery ── */
-  .gallery-meta { padding: 12px 18px 10px; display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
-  .vehicle-switcher { display: flex; gap: 6px; }
-  .switcher-btn {
-    width: 36px; height: 36px; border-radius: 50%;
-    border: 1.5px solid var(--border); background: var(--surface);
-    font-size: 1.1rem; cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    -webkit-tap-highlight-color: transparent; transition: border-color .15s, opacity .15s;
-    opacity: .45;
+  .gallery-meta { padding: 12px 18px 10px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .type-switcher { display: flex; gap: 8px; flex-wrap: wrap; }
+  .type-pill {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 13px; border-radius: 99px;
+    font-size: .78rem; font-weight: 700;
+    border: 1.5px solid transparent;
+    cursor: pointer; -webkit-tap-highlight-color: transparent;
+    transition: opacity .15s, border-color .15s;
+    opacity: .5;
   }
-  .switcher-btn.current { opacity: 1; border-color: var(--amber); background: rgba(224,141,0,.08); }
-  .switcher-btn:active { opacity: .8; }
-  .gallery-type-badge {
-    display: inline-flex; align-items: center; gap: 5px; padding: 4px 11px;
-    border-radius: 99px; font-size: .72rem; font-weight: 600;
-    text-transform: uppercase; letter-spacing: .06em;
-  }
-  .badge-ambulance { background: rgba(220,38,38,.1);  color: var(--ambulance); }
-  .badge-fire      { background: rgba(217,119,6,.1);  color: var(--fire); }
-  .badge-police    { background: rgba(37,99,235,.1);  color: var(--police); }
+  .type-pill.current { opacity: 1; border-color: currentColor; }
+  .type-pill:active { opacity: .8; }
+  .type-pill.ambulance { background: rgba(220,38,38,.1); color: var(--ambulance); }
+  .type-pill.fire      { background: rgba(217,119,6,.1); color: var(--fire); }
+  .type-pill.police    { background: rgba(37,99,235,.1); color: var(--police); }
   .gallery-title-block { padding: 0 18px 16px; }
   .gallery-title-block h2 {
     font-family: 'Nunito', sans-serif; font-size: 1.45rem; font-weight: 900; line-height: 1.15; color: var(--text);
@@ -346,8 +329,7 @@
     <span class="top-bar-title" id="gallery-country-name"></span>
   </div>
   <div class="gallery-meta">
-    <span id="gallery-badge" class="gallery-type-badge"></span>
-    <div class="vehicle-switcher" id="vehicle-switcher"></div>
+    <div class="type-switcher" id="type-switcher"></div>
   </div>
   <div class="gallery-title-block"><h2 id="gallery-title"></h2></div>
   <div class="image-grid" id="image-grid"></div>
@@ -737,18 +719,6 @@ function renderMap(containerId, country, mapRef, zoom) {
     boxZoom: false, keyboard: false
   });
   L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(map);
-
-  // Custom pin icon so the capital stands out from any city labels on the tile layer
-  const pinIcon = L.divIcon({
-    className: 'capital-pin',
-    html: `<div class="capital-pin-dot"></div>`,
-    iconSize: [16, 16],
-    iconAnchor: [8, 8]
-  });
-  L.marker([country.capLat, country.capLng], { icon: pinIcon })
-    .bindTooltip(`🏛 ${country.capital}`, { permanent: true, direction: 'top', offset: [0, -6], className: 'capital-tooltip' })
-    .addTo(map);
-
   return map;
 }
 
@@ -883,20 +853,18 @@ async function openGallery(type) {
   const cfg = VEHICLE_CONFIG[type], c = selectedCountry, ds = dateKey(selectedDate);
   document.getElementById('gallery-country-name').textContent = c.name;
   document.getElementById('gallery-title').textContent = `${cfg.label} in ${c.name}`;
-  const badge = document.getElementById('gallery-badge');
-  badge.textContent = cfg.icon + '  ' + cfg.label;
-  badge.className = 'gallery-type-badge ' + cfg.badge;
 
-  // Build the switcher: quick access to the other two vehicle types
-  const switcher = document.getElementById('vehicle-switcher');
+  // Build the type switcher: the "current type" indicator IS the navigation control.
+  // All 3 types shown as pills; the active one is highlighted, the other two are
+  // tappable shortcuts straight to that gallery.
+  const switcher = document.getElementById('type-switcher');
   switcher.innerHTML = '';
   Object.entries(VEHICLE_CONFIG).forEach(([key, vcfg]) => {
-    const btn = document.createElement('button');
-    btn.className = 'switcher-btn' + (key === type ? ' current' : '');
-    btn.textContent = vcfg.icon;
-    btn.setAttribute('aria-label', vcfg.label);
-    btn.onclick = () => switchVehicle(key);
-    switcher.appendChild(btn);
+    const pill = document.createElement('button');
+    pill.className = `type-pill ${key}` + (key === type ? ' current' : '');
+    pill.innerHTML = `${vcfg.icon} ${vcfg.label}`;
+    pill.onclick = () => { if (key !== type) switchVehicle(key); };
+    switcher.appendChild(pill);
   });
 
   showScreen('screen-gallery');
