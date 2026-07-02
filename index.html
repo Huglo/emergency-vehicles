@@ -63,7 +63,7 @@
   }
   .back-btn {
     background: var(--surface2); border: none; color: var(--text);
-    width: 48px; height: 48px; border-radius: 50%; font-size: 1.5rem;
+    width: 52px; height: 52px; border-radius: 50%; font-size: 1.5rem;
     cursor: pointer; display: flex; align-items: center; justify-content: center;
     flex-shrink: 0; transition: background .15s; -webkit-tap-highlight-color: transparent;
   }
@@ -84,11 +84,11 @@
   .day-strip-wrap::-webkit-scrollbar { display: none; }
   .day-strip { display: flex; gap: 8px; width: max-content; }
   .day-pill {
-    display: flex; flex-direction: column; align-items: center; gap: 2px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
     padding: 8px 14px; border-radius: 99px; background: var(--surface);
     border: 1.5px solid var(--border); cursor: pointer;
     transition: background .15s, border-color .15s;
-    -webkit-tap-highlight-color: transparent; min-width: 56px;
+    -webkit-tap-highlight-color: transparent; min-width: 56px; min-height: 52px;
   }
   .day-pill:active { background: var(--surface2); }
   .day-pill.active { background: var(--amber); border-color: var(--amber); }
@@ -105,8 +105,9 @@
   .tomorrow-btn {
     flex-shrink: 0; background: var(--surface); border: 1.5px solid var(--border);
     color: var(--amber); font-family: 'Nunito', sans-serif; font-size: .78rem;
-    font-weight: 800; padding: 8px 12px; border-radius: 99px; cursor: pointer;
-    display: flex; align-items: center; gap: 4px;
+    font-weight: 800; padding: 8px 14px; border-radius: 99px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; gap: 4px;
+    min-height: 52px; box-sizing: border-box;
     -webkit-tap-highlight-color: transparent; transition: background .15s; white-space: nowrap;
   }
   .tomorrow-btn:active { background: var(--surface2); }
@@ -719,6 +720,10 @@ function renderMap(containerId, country, mapRef, zoom) {
     boxZoom: false, keyboard: false
   });
   L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(map);
+  L.circleMarker([country.capLat, country.capLng], {
+    radius: 7, color: '#fff', weight: 2,
+    fillColor: '#e08d00', fillOpacity: 1
+  }).addTo(map);
   return map;
 }
 
