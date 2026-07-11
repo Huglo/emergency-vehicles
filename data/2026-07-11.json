@@ -1,0 +1,80 @@
+{
+  "pa_ambulance": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPHLaK8CUQmvMBUAmlXXJrJCvHn9fEyFWyKLHrBzD7sw&s=10",
+      "full": "https://newsroompanama.com/wp-content/uploads/2026/02/Sume-911-Ambulances.webp"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSe38xI1IZs9N_bleQuDTaLX3lw1G6ej2Mxy0JC_12A3Q&s=10",
+      "full": "https://live.staticflickr.com/2512/3736725850_a25e7ec617_b.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRjdvE4OWhcJLbmBkjH--eT_43ZNC5NMy63O8WaDJn23A&s=10",
+      "full": "https://static.wixstatic.com/media/e3dedb_850577a4c72b4b2a8971033cd6247132~mv2_d_6000_4000_s_4_2.png/v1/fill/w_551,h_343,al_c,q_85,usm_0.66_1.00_0.01,enc_avif,quality_auto/IMG_05272.png"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS-NUFtgJjNxnFqj99uld2uzMU4y6Yl1fAV37GLtkvOIg&s=10",
+      "full": "https://www.shutterstock.com/shutterstock/photos/2681379159/display_1500/stock-photo-panama-city-ambulance-vehicle-parked-on-a-street-2681379159.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaZVxsVkq8M8mk9ftPfAWJgmb_sNfhYgwpfsHkKimSzw&s=10",
+      "full": "https://static.wixstatic.com/media/e3dedb_ad32c5ba6aa54b038e66cfffed56a289~mv2.jpg/v1/fill/w_2500,h_1479,al_c/e3dedb_ad32c5ba6aa54b038e66cfffed56a289~mv2.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAC8pJlFbeHDPzxQmdwaW7Fg6XMetbIu1NmD8w2wqjyw&s=10",
+      "full": "https://i.redd.it/lc-ambulance-the-best-choice-in-a-t-v0-65vus1s4ad3d1.jpg?width=4032&format=pjpg&auto=webp&s=35512df12ddaf632c07cc2102560736c222c60ec"
+    }
+  ],
+  "pa_fire": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSu8SPu5A4t_hsHvQu4XDaO-R3k4a274qMeSuzEh8XLdQ&s=10",
+      "full": "https://www.mypanhandle.com/wp-content/uploads/sites/88/2024/07/PCFD-NEW-TRUCK.jpg?strip=1"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIQRxJo_AEj1u608kFIL8CDHELN-Frb_yXVfaV7bCKng&s=10",
+      "full": "https://www.shutterstock.com/image-photo/panama-canal-23-january-2024-260nw-2693666477.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcShXuWsgCZi3e-bD12mtxs8WCfZM4PRDJNYmTeo2Ur7fw&s=10",
+      "full": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=3846315955610690"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRhE6l810Zyf8CTJ2a3OdHBuZy1bXGLhWvl5FM-h1iFNQ&s=10",
+      "full": "https://images.pexels.com/photos/17319231/pexels-photo-17319231.jpeg?auto=compress&cs=tinysrgb&h=627&fit=crop&w=1200"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPGiaTib9R0ejz0a7iQxXU4BxHDoglG7545AxFTOxo0Q&s=10",
+      "full": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=10219674159987403"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMmZxpyjpXbZaJfwHSGI9QKKvM8yeSjwDW9e_J423TSw&s=10",
+      "full": "https://media.istockphoto.com/id/1159197924/photo/red-fire-trucks-in-front-of-the-ricardo-arango-fire-station-in-panama-city.jpg?s=170667a&w=0&k=20&c=oP8vYVpIq5q6rHquenlJBMcSSt0zwbyvIeGrn5hLTVo="
+    }
+  ],
+  "pa_police": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZ1bb0ybhVertOmL5imhtHK8Fuvl-sFdzIDueJzUBouA&s=10",
+      "full": "https://i.ytimg.com/vi/20RIoQw5AOs/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDHK1BhYEy_Mb_i2R7rKs_P1xDAyA"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSWwoRPVA_lzKwoAI4THALxNVAVoWoDWJ-Tik7NVL27Qg&s=10",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a6/Autopatrulla_Ford_Taurus_Police_Interceptor_-_Polic%C3%ADa_Nacional_de_Panam%C3%A1_%282014%29.jpeg/250px-Autopatrulla_Ford_Taurus_Police_Interceptor_-_Polic%C3%ADa_Nacional_de_Panam%C3%A1_%282014%29.jpeg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTW68S8VrO-waWIXZ5KQBqTxezCU4Xli-vcQs4ylyxG0g&s=10",
+      "full": "http://www.policecarwebsite.net/yet/police3/panama102.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlSG9M0lM6goibxARpW7LWz87IYruQYmZOFxetEwGJ3w&s=10",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/c/c6/Auto_patrulla_de_la_Policia_Nacional_de_Panama_-_Ford_Fusion_%282011%29.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSyuS77g6U1J-L-riVdqCcRrNXa7MjRdvWrdQKLZeNSbA&s=10",
+      "full": "https://c8.alamy.com/comp/2CB18B3/police-car-in-panama-city-panama-central-america-2CB18B3.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSol8wXox0Ow8jGwzZhumStbzkDfdENUD6IkDqcIe8xUQ&s=10",
+      "full": "https://pbs.twimg.com/media/Diee04YVAAAeCHU.jpg"
+    }
+  ]
+}
