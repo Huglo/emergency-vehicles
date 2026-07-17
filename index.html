@@ -7,6 +7,13 @@
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="data:,">
 <meta name="theme-color" content="#f5f6f8">
+<meta name="referrer" content="no-referrer">
+<!--
+  no-referrer above: Google's encrypted-tbn image CDN sometimes blocks/rate-limits
+  requests that arrive with a Referer header from an unrecognised domain (which is
+  exactly what happens once this app is hosted on a real URL instead of opened
+  locally as a file://). Sending no referrer at all avoids that inconsistency.
+-->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
@@ -256,6 +263,10 @@
     max-width: 100%; max-height: 100%;
     object-fit: contain; border-radius: 8px;
     user-select: none; -webkit-user-drag: none;
+  }
+  .lb-error {
+    color: rgba(255,255,255,.6); font-size: .9rem; text-align: center;
+    display: flex; flex-direction: column; align-items: center; gap: 8px;
   }
   /* Dot indicators */
   .lb-dots {
@@ -888,6 +899,7 @@ async function openGallery(type) {
       div.onclick = () => openLightbox(images, i);
       const image = document.createElement('img');
       image.alt = `${cfg.label} in ${c.name}`; image.loading = 'lazy';
+      image.referrerPolicy = 'no-referrer';
       image.onerror = () => { div.innerHTML = `<div class="img-error">⚠️<br>Unavailable</div>`; };
       image.src = img.thumb || img.full;
       div.appendChild(image); grid.appendChild(div);
@@ -912,16 +924,33 @@ function openLightbox(images, startIndex) {
   lightboxImages = images;
   lightboxIndex  = startIndex;
 
-  // Build slides
+  // Build slides — show the thumbnail immediately (already cached from the grid,
+  // so this is instant), then swap in the full-size image once it has loaded.
+  // If the full-size image fails or never existed, the thumbnail just stays.
   const track = document.getElementById('lb-track');
   track.innerHTML = '';
   images.forEach(img => {
     const slide = document.createElement('div');
     slide.className = 'lb-slide';
     const el = document.createElement('img');
-    el.src = img.full; el.alt = '';
+    el.referrerPolicy = 'no-referrer';
+    el.src = img.thumb || img.full;
+    el.alt = '';
+    el.onerror = () => {
+      // Even the thumbnail failed — show a clear placeholder instead of a blank overlay
+      slide.innerHTML = `<div class="lb-error">⚠️<br>Image unavailable</div>`;
+    };
     slide.appendChild(el);
     track.appendChild(slide);
+
+    // Preload the full-size version in the background
+    if (img.full && img.full !== img.thumb) {
+      const preload = new Image();
+      preload.referrerPolicy = 'no-referrer';
+      preload.onload = () => { el.src = img.full; };
+      preload.onerror = () => { /* keep the thumbnail — already displayed */ };
+      preload.src = img.full;
+    }
   });
 
   // Build dots
