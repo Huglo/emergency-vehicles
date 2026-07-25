@@ -1,0 +1,80 @@
+{
+  "ws_ambulance": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfnVWoDAyc_JaPT6DGr1HoTQlHrbZ_E6j7qLVRtbo1mQ&s=10",
+      "full": "https://samoa-observer-prd.s3.ap-southeast-2.amazonaws.com/store/4e5151d433d156c30a0a167816140a66.png"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPkCnl71E0M6sE-3xwHvlVhHv5B0zW3O4f-2CiC8epZw&s=10",
+      "full": "https://samoa.org.nz/wp-content/uploads/2020/07/IMG_2159.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBLkx2VNRbpB3yTqqGhnNDRGFwyugHLcbqsQYcCpfcLQ&s=10",
+      "full": "https://samoa-observer-prd.s3.ap-southeast-2.amazonaws.com/store/083d50ac9e033fc2c9fd7e70856c7cad.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ9x8SEV9o-I7fxu7l-GHUw1q7lS0TpIKtbY-6UEy_Cug&s=10",
+      "full": "https://www.braunnw.com/uploads/14849_499.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRam_4Ld77klo9Q4Qz9Y5gOG5RojguzMv5vqw2D5rMKBw&s=10",
+      "full": "https://i.ytimg.com/vi/Ibdb1gkaLY0/hq720.jpg?sqp=-oaymwE7CK4FEIIDSFryq4qpAy0IARUAAAAAGAElAADIQj0AgKJD8AEB-AH-CYAC0AWKAgwIABABGE8gVShlMA8=&rs=AOn4CLBR0xbQ6WByTPU91MdhhvBp4lolPA"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcROMWiovIt_F9Fy16CFDvr5oH_00c3xlNoGWXSWUUOcjw&s=10",
+      "full": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1308457731408174"
+    }
+  ],
+  "ws_fire": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQH-gs067G82Si8BBpsz4iK_n3PRYqsZdkqCjaTPTZDqw&s=10",
+      "full": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=428570676847257&get_thumbnail=1"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRotTYoHzZESU5OmrbOzgZkm-qs_ztkHme-xFXD_lN7pQ&s=10",
+      "full": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=122120772872128683"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaYAyK6C8nehEe-4A0NrkYVVDDQ20E3t-6O7ryMCUzGA&s=10",
+      "full": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=684518543719775"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTI4HWW9vl11WYM-4pqP55kDUp8TUWcJ3mNyVsQG4PSMw&s=10",
+      "full": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=10152530438239178"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6Cfz2q0-bH1aqfX0kp6MElyOWJ4sHW6o4xPX4TenB1A&s=10",
+      "full": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=654485163387634"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRfbVqzAymKzQSuZVjcq64XNCs86AA7Q6HfYE2kiTqo8g&s=10",
+      "full": "https://samoanews.com/sites/default/files/styles/slideshow/public/field/image/fire_trucks.jpg?itok=5fFru5SK"
+    }
+  ],
+  "ws_police": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUBcKQl2E9qel8vtVoDKJwJHTfmQhuBnDfDTSqBuG9hQ&s=10",
+      "full": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=122146500014792933"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmhW1GIbhGbVnV4DgXRBm9WisPOklgLylZpEsQH3fg2g&s=10",
+      "full": "https://live.staticflickr.com/3786/13791274553_66020355f5_b.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRPDT61q3rz_muoLCIf0nsFpDE7MkNajeQEmuTiTh169g&s=10",
+      "full": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1084685918363483"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSXNWmKq1vGH5uZDCIWAK4jWC_U0uDuyqrFvFpKXl56Fg&s=10",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/4/43/Samoa_Police_Mobile_Police_Unit.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT9OEgfh8Xi2eHd-emcJKtOvAS9DzRmGu3kwbrSJb1DzA&s=10",
+      "full": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1182291305269610"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQrd77VhcHOqDlW0eBUO7MM1IlpuqN_uAQioZZS2FVnzQ&s=10",
+      "full": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=898605503638193"
+    }
+  ]
+}
