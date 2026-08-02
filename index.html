@@ -64,6 +64,17 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
+  /* ── Language toggle ── */
+  .lang-toggle {
+    display: block; margin: 28px auto 8px; width: max-content;
+    background: rgba(0,0,0,.04); border: 1.5px solid var(--border);
+    color: var(--muted); font-family: 'Nunito', sans-serif; font-size: .72rem;
+    font-weight: 800; letter-spacing: .02em; padding: 7px 16px; border-radius: 99px;
+    cursor: pointer; -webkit-tap-highlight-color: transparent;
+    transition: background .15s, color .15s;
+  }
+  .lang-toggle:active { background: var(--surface2); color: var(--text); }
+
   /* ── Top bar ── */
   .top-bar {
     display: flex; align-items: center; gap: 12px; padding: 18px 18px 0;
@@ -297,7 +308,7 @@
 
 <div id="screen-loading" class="screen active">
   <div class="loader-ring"></div>
-  <span>Loading…</span>
+  <span id="loading-label">Loading…</span>
 </div>
 
 <div id="screen-country" class="screen">
@@ -305,7 +316,7 @@
     <div class="day-strip-wrap">
       <div class="day-strip" id="day-strip"></div>
     </div>
-    <button class="tomorrow-btn" onclick="goTomorrow()">Tomorrow ›</button>
+    <button class="tomorrow-btn" onclick="goTomorrow()"><span id="tomorrow-btn-label">Tomorrow</span> ›</button>
   </div>
   <div class="country-hero">
     <div id="country-flag" class="country-flag-emoji"></div>
@@ -326,21 +337,21 @@
     <div class="vehicle-card ambulance" onclick="goVehicle('ambulance')">
       <div class="vehicle-icon">🚑</div>
       <div class="vehicle-card-info">
-        <div class="vehicle-card-label">Ambulance</div>
+        <div class="vehicle-card-label" id="label-ambulance">Ambulance</div>
       </div>
       <div class="vehicle-card-arrow">›</div>
     </div>
     <div class="vehicle-card fire" onclick="goVehicle('fire')">
       <div class="vehicle-icon">🚒</div>
       <div class="vehicle-card-info">
-        <div class="vehicle-card-label">Fire Engine</div>
+        <div class="vehicle-card-label" id="label-fire">Fire Engine</div>
       </div>
       <div class="vehicle-card-arrow">›</div>
     </div>
     <div class="vehicle-card police" onclick="goVehicle('police')">
       <div class="vehicle-icon">🚔</div>
       <div class="vehicle-card-info">
-        <div class="vehicle-card-label">Police Car</div>
+        <div class="vehicle-card-label" id="label-police">Police Car</div>
       </div>
       <div class="vehicle-card-arrow">›</div>
     </div>
@@ -363,7 +374,7 @@
 <div id="screen-tomorrow" class="screen">
   <div class="top-bar">
     <button class="back-btn" onclick="goBack()">‹</button>
-    <span class="top-bar-title">Coming Tomorrow</span>
+    <span class="top-bar-title" id="tomorrow-title">Coming Tomorrow</span>
   </div>
   <div class="country-hero">
     <div id="tomorrow-flag" class="country-flag-emoji"></div>
@@ -393,6 +404,8 @@
   <div class="lb-dots" id="lb-dots"></div>
 </div>
 
+<button id="lang-toggle" class="lang-toggle" onclick="toggleLang()"></button>
+
 <script>
 // ─────────────────────────────────────────────
 // Pull-to-refresh: cancel only downward pull at page top
@@ -411,6 +424,152 @@
 const SERPER_KEY    = '7e592f5580fdd7378522c88bf3446415677e44df';
 const LAUNCH_DATE   = new Date(2026, 5, 21);
 const MAX_DAYS_BACK = 2; // today + 2 previous days
+
+// ─────────────────────────────────────────────
+// i18n
+// ─────────────────────────────────────────────
+const LANG_STORAGE_KEY = 'ev_lang';
+
+const I18N = {
+  en: {
+    appTitle: 'Emergency Vehicles of the World',
+    loading: 'Loading…',
+    tomorrow: 'Tomorrow',
+    comingTomorrow: 'Coming Tomorrow',
+    ambulance: 'Ambulance',
+    fireEngine: 'Fire Engine',
+    policeCar: 'Police Car',
+    today: 'Today',
+    noImagesFound: name => `No images found for ${name}.`,
+    unavailable: 'Unavailable',
+    couldNotLoadImages: 'Could not load images.',
+    imageUnavailable: 'Image unavailable',
+    galleryTitle: (label, name) => `${label} in ${name}`,
+    biggerThan: 'bigger than',
+    smallerThan: 'smaller than',
+    sameAreaAs: name => `same area as ${name}`,
+    langToggle: 'FR',
+    dateLocale: 'en-GB'
+  },
+  fr: {
+    appTitle: "Véhicules d'Urgence du Monde",
+    loading: 'Chargement…',
+    tomorrow: 'Demain',
+    comingTomorrow: 'Demain',
+    ambulance: 'Ambulance',
+    fireEngine: 'Camion de pompiers',
+    policeCar: 'Voiture de police',
+    today: "Aujourd'hui",
+    noImagesFound: name => `Aucune image trouvée pour ${name}.`,
+    unavailable: 'Indisponible',
+    couldNotLoadImages: 'Impossible de charger les images.',
+    imageUnavailable: 'Image indisponible',
+    galleryTitle: (label, name) => `${label} — ${name}`,
+    biggerThan: 'plus grand que',
+    smallerThan: 'plus petit que',
+    sameAreaAs: name => `même superficie que ${name}`,
+    langToggle: 'EN',
+    dateLocale: 'fr-FR'
+  }
+};
+
+// French exonyms for the handful of non-standard region codes that
+// Intl.DisplayNames can't resolve on its own (UK home nations, Kosovo).
+const SPECIAL_COUNTRY_NAMES = {
+  'gb-eng': { en: 'England',          fr: 'Angleterre' },
+  'gb-sct': { en: 'Scotland',         fr: 'Écosse' },
+  'gb-wls': { en: 'Wales',            fr: 'Pays de Galles' },
+  'gb-nir': { en: 'Northern Ireland', fr: 'Irlande du Nord' },
+  'xk':     { en: 'Kosovo',           fr: 'Kosovo' }
+};
+
+// French names for capital cities, keyed by country code — only listed where
+// the French exonym differs from the English form stored in COUNTRIES.
+// Country ORDER (and therefore which country appears on which date) is always
+// driven by the English `name` field in COUNTRIES, never by these translations.
+const CAPITAL_FR = {
+  af: 'Kaboul', dz: 'Alger', ad: 'Andorre-la-Vieille', am: 'Erevan', at: 'Vienne',
+  az: 'Bakou', bd: 'Dacca', be: 'Bruxelles', bt: 'Thimphou', br: 'Brasilia',
+  td: "N'Djaména", cn: 'Pékin', co: 'Bogota', cu: 'La Havane', cy: 'Nicosie',
+  dk: 'Copenhague', dj: 'Djibouti', do: 'Saint-Domingue', eg: 'Le Caire',
+  'gb-eng': 'Londres', et: 'Addis-Abeba', ge: 'Tbilissi', gr: 'Athènes',
+  gd: 'Saint-Georges', gt: 'Guatemala', ir: 'Téhéran', iq: 'Bagdad', il: 'Jérusalem',
+  kw: 'Koweït', kg: 'Bichkek', lb: 'Beyrouth', mt: 'La Valette', mu: 'Port-Louis',
+  mx: 'Mexico', md: 'Chisinau', mn: 'Oulan-Bator', np: 'Katmandou', om: 'Mascate',
+  pa: 'Panama', py: 'Asuncion', ph: 'Manille', pl: 'Varsovie', pt: 'Lisbonne',
+  ro: 'Bucarest', ru: 'Moscou', sm: 'Saint-Marin', sa: 'Riyad', 'gb-sct': 'Édimbourg',
+  sg: 'Singapour', so: 'Mogadiscio', kr: 'Séoul', ss: 'Djouba', ch: 'Berne',
+  sy: 'Damas', tj: 'Douchanbé', tt: "Port-d'Espagne", tm: 'Achgabat',
+  ae: 'Abou Dabi', gb: 'Londres', uz: 'Tachkent', vu: 'Port-Vila',
+  va: 'Cité du Vatican', vn: 'Hanoï', ye: 'Sanaa'
+};
+
+function localizedCapital(country) {
+  if (currentLang === 'fr' && CAPITAL_FR[country.code]) return CAPITAL_FR[country.code];
+  return country.capital;
+}
+
+function detectLang() {
+  const saved = localStorage.getItem(LANG_STORAGE_KEY);
+  if (saved === 'en' || saved === 'fr') return saved;
+  const nav = (navigator.language || navigator.userLanguage || 'en').toLowerCase();
+  return nav.startsWith('fr') ? 'fr' : 'en';
+}
+
+let currentLang = detectLang();
+
+function t(key, ...args) {
+  const entry = I18N[currentLang][key];
+  return typeof entry === 'function' ? entry(...args) : entry;
+}
+
+// Localized display name for a country, via Intl.DisplayNames when possible
+// (covers real ISO codes automatically), falling back to the special-case
+// table above, and finally to the English name baked into COUNTRIES.
+let regionDisplayNames = null;
+function initRegionDisplayNames() {
+  try { regionDisplayNames = new Intl.DisplayNames([currentLang], { type: 'region' }); }
+  catch(e) { regionDisplayNames = null; }
+}
+function localizedCountryName(country) {
+  const special = SPECIAL_COUNTRY_NAMES[country.code];
+  if (special) return special[currentLang];
+  if (regionDisplayNames) {
+    try {
+      const name = regionDisplayNames.of(country.code.toUpperCase());
+      if (name && name.toUpperCase() !== country.code.toUpperCase()) return name;
+    } catch(e) { /* fall through */ }
+  }
+  return country.name;
+}
+
+function toggleLang() {
+  currentLang = currentLang === 'en' ? 'fr' : 'en';
+  localStorage.setItem(LANG_STORAGE_KEY, currentLang);
+  applyLanguage();
+}
+
+// Re-renders every piece of on-screen text in the current language,
+// without changing which screen or country is currently showing.
+function applyLanguage() {
+  initRegionDisplayNames();
+  document.documentElement.lang = currentLang;
+  document.title = t('appTitle');
+  document.getElementById('lang-toggle').textContent = t('langToggle');
+  document.getElementById('loading-label').textContent = t('loading');
+  document.getElementById('tomorrow-btn-label').textContent = t('tomorrow');
+  document.getElementById('tomorrow-title').textContent = t('comingTomorrow');
+  document.getElementById('label-ambulance').textContent = t('ambulance');
+  document.getElementById('label-fire').textContent = t('fireEngine');
+  document.getElementById('label-police').textContent = t('policeCar');
+
+  buildDayStrip();
+  if (selectedCountry) renderCountryScreen();
+
+  const activeScreen = document.querySelector('.screen.active');
+  if (activeScreen && activeScreen.id === 'screen-tomorrow') openTomorrow();
+  if (activeScreen && activeScreen.id === 'screen-gallery' && currentVehicleType) openGallery(currentVehicleType);
+}
 
 // ─────────────────────────────────────────────
 // COUNTRIES
@@ -641,9 +800,9 @@ function countryForDate(d) {
 }
 function parseDateKey(str) { const [y,m,d] = str.split('-').map(Number); return new Date(y, m-1, d); }
 function formatDateLong(d) {
-  return d.toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+  return d.toLocaleDateString(t('dateLocale'), { weekday:'long', day:'numeric', month:'long', year:'numeric' });
 }
-function formatDayShort(d) { return d.toLocaleDateString('en-GB', { weekday:'short' }).toUpperCase(); }
+function formatDayShort(d) { return d.toLocaleDateString(t('dateLocale'), { weekday:'short' }).toUpperCase(); }
 
 // ─────────────────────────────────────────────
 // CACHE (localStorage)
@@ -755,7 +914,7 @@ function formatPopulation(n) {
 
 function formatArea(km2) {
   if (km2 < 10) return km2.toFixed(1);
-  return Math.round(km2).toLocaleString('en-GB');
+  return Math.round(km2).toLocaleString(t('dateLocale'));
 }
 
 // Compares country area against Wales and France, and returns whichever
@@ -763,8 +922,8 @@ function formatArea(km2) {
 // shown IS Wales or France, that option is excluded so it isn't compared to itself.
 function areaComparison(countryAreaKm2, countryName) {
   const options = [
-    { label: 'Wales',  refArea: WALES_AREA_KM2 },
-    { label: 'France', refArea: FRANCE_AREA_KM2 }
+    { label: 'Wales',  labelI18n: { en: 'Wales',  fr: 'le Pays de Galles' }, refArea: WALES_AREA_KM2 },
+    { label: 'France', labelI18n: { en: 'France', fr: 'la France' },         refArea: FRANCE_AREA_KM2 }
   ].filter(opt => opt.label !== countryName);
 
   const computed = options.map(opt => {
@@ -777,14 +936,15 @@ function areaComparison(countryAreaKm2, countryName) {
   // Pick whichever comparison yields the smaller multiple — easier to picture
   computed.sort((a, b) => a.ratio - b.ratio);
   const best = computed[0];
+  const label = best.labelI18n[currentLang];
 
   // Areas that round to the same figure read as "same area as X" rather than "1× bigger"
   if (Math.abs(best.ratio - 1) < 0.05) {
-    return `same area as ${best.label}`;
+    return t('sameAreaAs', label);
   }
   const roundedRatio = best.ratio >= 10 ? Math.round(best.ratio) : Math.round(best.ratio * 10) / 10;
-  const word = best.isCountryBigger ? 'bigger than' : 'smaller than';
-  return `${roundedRatio}× ${word} ${best.label}`;
+  const word = best.isCountryBigger ? t('biggerThan') : t('smallerThan');
+  return `${roundedRatio}× ${word} ${label}`;
 }
 
 function renderStatsRow(elId, country) {
@@ -871,7 +1031,7 @@ function buildDayStrip() {
     const pill = document.createElement('div');
     pill.className = 'day-pill' + (isToday ? ' active' : '');
     pill.dataset.datekey = dateKey(d);
-    pill.innerHTML = `<span class="pill-day">${isToday ? 'Today' : formatDayShort(d)}</span>
+    pill.innerHTML = `<span class="pill-day">${isToday ? t('today') : formatDayShort(d)}</span>
                       <span class="pill-date">${d.getDate()}</span>`;
     pill.onclick = () => { location.hash = 'day-' + dateKey(d); };
     strip.appendChild(pill);
@@ -892,8 +1052,8 @@ function activateDayPill(dkStr) {
 function renderCountryScreen() {
   const c = selectedCountry;
   document.getElementById('country-flag').textContent = codeToFlagEmoji(c.code);
-  document.getElementById('country-name').textContent = c.name;
-  document.getElementById('capital-label').textContent = c.capital;
+  document.getElementById('country-name').textContent = localizedCountryName(c);
+  document.getElementById('capital-label').textContent = localizedCapital(c);
   renderStatsRow('stats-row', c);
   document.getElementById('date-label').textContent = formatDateLong(selectedDate);
   setTimeout(() => { countryMapInstance = renderMap('country-map', c, countryMapInstance, currentMapZoom); }, 50);
@@ -942,8 +1102,8 @@ function openTomorrow() {
   const t = new Date(startOfDay(new Date())); t.setDate(t.getDate() + 1);
   const c = countryForDate(t);
   document.getElementById('tomorrow-flag').textContent = codeToFlagEmoji(c.code);
-  document.getElementById('tomorrow-name').textContent = c.name;
-  document.getElementById('tomorrow-capital-label').textContent = c.capital;
+  document.getElementById('tomorrow-name').textContent = localizedCountryName(c);
+  document.getElementById('tomorrow-capital-label').textContent = localizedCapital(c);
   document.getElementById('tomorrow-date').textContent = formatDateLong(t);
   showScreen('screen-tomorrow');
   setTimeout(() => { tomorrowMapInstance = renderMap('tomorrow-map', c, tomorrowMapInstance, currentTomorrowMapZoom); }, 50);
@@ -952,10 +1112,14 @@ function openTomorrow() {
 // ─────────────────────────────────────────────
 // GALLERY
 // ─────────────────────────────────────────────
+const VEHICLE_LABEL_KEY = { ambulance: 'ambulance', fire: 'fireEngine', police: 'policeCar' };
+
 async function openGallery(type) {
   const cfg = VEHICLE_CONFIG[type], c = selectedCountry, ds = dateKey(selectedDate);
-  document.getElementById('gallery-country-name').textContent = c.name;
-  document.getElementById('gallery-title').textContent = `${cfg.label} in ${c.name}`;
+  const cName = localizedCountryName(c);
+  const label = t(VEHICLE_LABEL_KEY[type]);
+  document.getElementById('gallery-country-name').textContent = cName;
+  document.getElementById('gallery-title').textContent = t('galleryTitle', label, cName);
 
   // Build the type switcher: the "current type" indicator IS the navigation control.
   // All 3 types shown as pills; the active one is highlighted, the other two are
@@ -965,7 +1129,7 @@ async function openGallery(type) {
   Object.entries(VEHICLE_CONFIG).forEach(([key, vcfg]) => {
     const pill = document.createElement('button');
     pill.className = `type-pill ${key}` + (key === type ? ' current' : '');
-    pill.innerHTML = `${vcfg.icon} ${vcfg.label}`;
+    pill.innerHTML = `${vcfg.icon} ${t(VEHICLE_LABEL_KEY[key])}`;
     pill.onclick = () => { if (key !== type) switchVehicle(key); };
     switcher.appendChild(pill);
   });
@@ -976,7 +1140,7 @@ async function openGallery(type) {
   try {
     const { images } = await fetchImages(type, c.name, ds, c.code);
     if (!images.length) {
-      grid.innerHTML = `<div class="no-results"><div class="emoji">🔍</div><div>No images found for ${c.name}.</div></div>`;
+      grid.innerHTML = `<div class="no-results"><div class="emoji">🔍</div><div>${t('noImagesFound', cName)}</div></div>`;
       return;
     }
     grid.innerHTML = '';
@@ -985,14 +1149,14 @@ async function openGallery(type) {
       div.className = 'image-thumb';
       div.onclick = () => openLightbox(images, i);
       const image = document.createElement('img');
-      image.alt = `${cfg.label} in ${c.name}`; image.loading = 'lazy';
+      image.alt = t('galleryTitle', label, cName); image.loading = 'lazy';
       image.referrerPolicy = 'no-referrer';
-      image.onerror = () => { div.innerHTML = `<div class="img-error">⚠️<br>Unavailable</div>`; };
+      image.onerror = () => { div.innerHTML = `<div class="img-error">⚠️<br>${t('unavailable')}</div>`; };
       image.src = img.thumb || img.full;
       div.appendChild(image); grid.appendChild(div);
     });
   } catch(err) {
-    grid.innerHTML = `<div class="no-results"><div class="emoji">⚠️</div><div>Could not load images.<br><small>${err.message}</small></div></div>`;
+    grid.innerHTML = `<div class="no-results"><div class="emoji">⚠️</div><div>${t('couldNotLoadImages')}<br><small>${err.message}</small></div></div>`;
   }
 }
 
@@ -1025,7 +1189,7 @@ function openLightbox(images, startIndex) {
     el.alt = '';
     el.onerror = () => {
       // Even the thumbnail failed — show a clear placeholder instead of a blank overlay
-      slide.innerHTML = `<div class="lb-error">⚠️<br>Image unavailable</div>`;
+      slide.innerHTML = `<div class="lb-error">⚠️<br>${t('imageUnavailable')}</div>`;
     };
     slide.appendChild(el);
     track.appendChild(slide);
@@ -1117,6 +1281,17 @@ window.addEventListener('popstate', () => {
 // INIT
 // ─────────────────────────────────────────────
 function init() {
+  initRegionDisplayNames();
+  document.documentElement.lang = currentLang;
+  document.title = t('appTitle');
+  document.getElementById('lang-toggle').textContent = t('langToggle');
+  document.getElementById('loading-label').textContent = t('loading');
+  document.getElementById('tomorrow-btn-label').textContent = t('tomorrow');
+  document.getElementById('tomorrow-title').textContent = t('comingTomorrow');
+  document.getElementById('label-ambulance').textContent = t('ambulance');
+  document.getElementById('label-fire').textContent = t('fireEngine');
+  document.getElementById('label-police').textContent = t('policeCar');
+
   selectedDate    = startOfDay(new Date());
   selectedCountry = countryForDate(selectedDate);
   buildDayStrip();
