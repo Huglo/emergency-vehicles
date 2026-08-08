@@ -1,0 +1,80 @@
+{
+  "za_ambulance": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRaH8jZ4yxQUpssBk7kKt9zn-XYiJBg5zAFgxECT8S1LQ&s=10",
+      "full": "https://media.gettyimages.com/id/459000161/photo/south-african-ambulance.jpg?s=612x612&w=gi&k=20&c=se__z2NJU1xuZ031ahppkURkIfC3zWQzFNeyBw_WHo4="
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQNfEeMvpSJ1LYnJ5M4dKJwJcWrqhm9g89ZRGuuqgL7yw&s=10",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/a/a7/Pretoria_paramedics.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcScmrKn7iMDyFnaBCukkRldEkxLjP4-ulvpcbdJreiOwQ&s=10",
+      "full": "https://c8.alamy.com/comp/2JD2J85/ambulance-truck-freedom-park-pretoriatshwane-gauteng-south-africa-2JD2J85.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOub9n9XEDiWtCsTDgAEBFn-zucLK1NwPgXQ5jAFEnVw&s=10",
+      "full": "https://www.emergencyvehicles.co.za/wp-content/uploads/2017/08/IMG_8800.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnPYRBLDInVpCQbK0M6xYvk2x3FWpaDaodwhlPBKhnPw&s=10",
+      "full": "https://sapaesa.co.za/wp-content/uploads/2022/09/africa-safe-1.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRS002Q4LBMwY_gzvfPFgyF4Ke2ZmGw1sn0yDYo-GiIng&s=10",
+      "full": "https://www.shutterstock.com/image-photo/cape-town-south-africa-september-260nw-1830004367.jpg"
+    }
+  ],
+  "za_fire": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5jkAWGohWPX6Q4aulrq_RqC37wsEb5LgpYIKQ3vqLuw&s=10",
+      "full": "https://i.ytimg.com/vi/w83MR882dZ8/maxresdefault.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqajPnNe4vZr01ubNJs0Z4-z1VPznD77WscI-q3f3A2A&s=10",
+      "full": "https://truckandfreight.co.za/wp-content/uploads/2025/06/514159675_1145788130928178_294287341548911889_n.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTjY5XnGq2bJv2-tBxImfb-OMC6BRsCy9Z-Ip5E5UApLQ&s=10",
+      "full": "https://www.industrialfire.co.za/wp-content/uploads/nfpa-1901-types-of-fire-trucks.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0ZLOP-COp22cCGu3Tpa3sJ_BYoO3VfS-lrh42U7u2lw&s=10",
+      "full": "https://www.marce.co.za/wp-content/uploads/2022/02/DJI_0648-scaled.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZv2QDgs_k_Rac4strH7X2ixTU6MwMhC8D5ugYSXS9Qw&s=10",
+      "full": "https://cdn.24.co.za/files/Cms/General/d/3460/cca462f5578446e6a54cca2afa69ba0f.jpeg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwIhzb3aSxJNfi6NyVR-Y7Stwq4m_JtnG9KjvkUhge8A&s=10",
+      "full": "https://c8.alamy.com/comp/TA89JY/city-of-cape-town-fire-and-rescue-service-truck-or-engine-in-the-street-patrolling-the-area-around-table-mountain-national-park-cape-town-south-africa-TA89JY.jpg"
+    }
+  ],
+  "za_police": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzhMOLKQyLDqYGgOnfJ0xvomn6y324-u6RsAu_Urg3xQ&s=10",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/9/90/South_African_Police_car_-_Ulundi_%288%29.JPG"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR0pji47SBCj9N3l4fmf1HAC6cQyaRe1tE0eAuQBE82vA&s=10",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/c/c4/South_African_Police_Nissan_Hardbody_patrol_vehicle_%2816489176428%29.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsXmCsMa-4FsjFAvvWFUFbJJVoOvEGfVZaUjXrsOWizg&s=10",
+      "full": "https://hips.hearstapps.com/hmg-prod/images/461509514-504464882455910-6087367743637397842-n-66fad7f8dc809.jpg?crop=1.00xw:0.565xh;0,0.209xh&resize=980:*"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSC7FL20VPnJXPyrYOMBv9yzqY9S6crRBWO_dq3TYAvrQ&s=10",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/a/a2/South_African_Police_car_-_Masoyi.JPG"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSS-K7m3jLL065nJUKt9ZCWOKUQ_BPE9TNT1wfTwDeKOg&s=10",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/9/91/South_African_Police_car_-_highway_patrol.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQBcYkNebAUduhPrM_atDXBnPCLGMNiEpZg6frhlKz4Yw&s=10",
+      "full": "https://businesstech.co.za/news/wp-content/uploads/2019/11/Police-header.jpg"
+    }
+  ]
+}
