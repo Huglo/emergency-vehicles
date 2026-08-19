@@ -1,0 +1,80 @@
+{
+  "tj_ambulance": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR9QOC1JWINa2HND2W75KFqgSZcqFK8YhavROADW_sPAg&s=10",
+      "full": "https://indotaj.com/wp-content/uploads/2023/12/Ambulance-1.webp"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUYfPAk0N3c19ChEV-fEljyhuccS0fNaeCXkPRaGWpdg&s=10",
+      "full": "https://www.unicef.org/tajikistan/sites/unicef.org.tajikistan/files/styles/media_large_image/public/IMG_3073.jpg.webp?itok=cO7sxhHb"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSD0qYPlCqCSKyJYiF75sVS_d9NkWv4IJjK7o5uxzcBWQ&s=10",
+      "full": "https://gdb.rferl.org/73FBF8B1-60F4-4C74-97E7-1FDD89015C87_w408_r0.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXLug4TXMGlpeAsEJKRyxulJ_ZkR99QOs4Rte2gCv-mg&s=10",
+      "full": "https://assets.mitsubishi-fuso.com/fusoassets/2021/12/reMitsubishi-Fuso-to-ship-10-light-duty-Canter-trucks-to-support-medical-care-in-Tajikistan-1-scaled.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSIO-3UkZH06Xsp91pC3AEe-elD72lvHML0wlsABwDiWg&s=10",
+      "full": "https://www.unicef.org/tajikistan/sites/unicef.org.tajikistan/files/styles/press_release_feature/public/IMG_3126.jpg.webp?itok=nKkWd7zf"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSz48ET2fy-2Js6lOycMI0U5phx44hYhDSolemgwScw3Q&s=10",
+      "full": "https://www.joint-forces.com/wp-content/uploads/2022/01/Linza-Ambulance.jpg"
+    }
+  ],
+  "tj_fire": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRHwOGVDtxi3U-3fT3miq7PUM92lFmaEBqhweMbIOHwMg&s=10",
+      "full": "https://www.easst.co.uk/wp-content/uploads/2019/07/Screenshot-2019-07-01-at-12.41.48.png"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2G0VXQQQT1PjvBEOnyrCg6eebuVDmaMSBBOncp15Jtg&s=10",
+      "full": "https://www.machinesequipments.com/images/product/Construction3TonFireTrucks-lab-230109761.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-aS_aqhUxPZVmvtls2C3Jx6nAl_BxUZw8-u5TRT4lnA&s=10",
+      "full": "https://touchstamps.com/Image/GetImage/1411502"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzLLOo_UowUU1gUL7zQ6zjcgVSjLY_vAJsMnh1wa_-9w&s=10",
+      "full": "https://www.easst.co.uk/wp-content/uploads/2019/08/T015.1.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZu-6lirfFK60tWUPlnLTHFQhExOrvZLMM16gOkHVRxg&s=10",
+      "full": "https://www.machinesequipments.com/images/product/8TonFirefightingTrucks-lab-895837962.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQmxZM6Pj43f_t-meNROCeYLu3E_WKx5bj7samvIdRPQ&s=10",
+      "full": "https://caspianpost.com/storage/photos/thumbs/large/n5k1sH7F4WKtad9p6sl6BvHctCHUUD3hIbNJ2UYp.webp"
+    }
+  ],
+  "tj_police": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQM16oxF_tolZ9eNGRCw-qzHZajKB9K0_bFlYuCdh56JA&s=10",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/9/9c/Tajikistan_Police_cars.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSvzwt7wGTozGMgFoRf1U6a6bLjMJQe9d1a_a92CZiMFg&s=10",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/d/dc/%D0%A1%D0%BF%D0%B5%D1%86%D0%BC%D0%B0%D1%88%D0%B8%D0%BD%D0%B0.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSCBDDrbc0kAY4-Gw20iVomgi71xh20zL723fndIW1LFw&s=10",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/5/53/Tajikistan_Traffic_police_car.png?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBSLkoI-iLw00Mxf3GUW2feAa3LFyqxxL1eQYbtlvXIg&s=10",
+      "full": "https://i.redd.it/current-central-asian-police-cars-2023-v0-al9y0e4ngkcb1.jpg?width=1280&format=pjpg&auto=webp&s=3aa2b735bdeca8993ea267078c72c63b9b266850"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfWNRA4GnJgNGVIFbTZm5C5QiYmGWJYnmNBO_O_tEQ5w&s=10",
+      "full": "https://pbs.twimg.com/media/FpflIvEXgAEcaHW.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBTCIhdZz9K6XYsnyzRkPy-xuGTCBOvZ_KIkK33ns5Iw&s=10",
+      "full": "https://www.mvd.tj/uploads/posts/2025-08/9addb24717_1.webp"
+    }
+  ]
+}
