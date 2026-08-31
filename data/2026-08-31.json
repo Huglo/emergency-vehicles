@@ -1,0 +1,80 @@
+{
+  "ua_ambulance": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGYnHQGNeDOlueKLeS8iHAzvytzepMrAn4tTwJVFdk9Q&s=10",
+      "full": "https://imageio.forbes.com/specials-images/imageserve/6506a2b24b130dcaf728ff09/0x0.jpg?format=jpg&crop=959,539,x122,y121,safe&height=600&width=1200&fit=bounds"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9bqpHpW418pFYMLJ4pehX9VndMq3Ul9qEvwqEY4mDpw&s=10",
+      "full": "https://www.directrelief.org/wp-content/uploads/2023/02/unnamed-12.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSd5wODLJc8qWTg06zyOsL9qrxZ87Cg8SaBT1o67BKqdw&s=10",
+      "full": "https://ukraine.un.org/sites/default/files/styles/large/public/2023-03/7%20%281%29.jpg?h=a1e1a043&itok=MrujGUYr"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQnl7GLT-_yKiTYaffbEZhWinSF4Q4M5MgDzdqs0kMrLA&s=10",
+      "full": "https://images.squarespace-cdn.com/content/v1/644127ecf7b76c1b85693f67/94ec5142-dfaf-4d4c-90df-11aa9325c2d0/DSC00940a.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBR-cHtga85njN5p1cdoE2kd-Kxue9MEhFKo_cwe7EBA&s=10",
+      "full": "https://rubryka.com/wp-content/uploads/2025/03/whatsapp-2025-03-25-151010-f767efc2.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSh0vzpnGqtNkC_nWfWU6rN0W0XBvHOK_vddJ6VTDyebQ&s=10",
+      "full": "https://www.osce.org/sites/default/files/styles/container_sm_1x/public/2026-01/The%20vehicle%20of%20chemical%20and%20radiological%20reconnaissance%2C%20provided%20by%20the%20Extra-budgetary%20OSCE%20Support%20Programme%20for%20Ukraine%20to%20the%20State%20Emergency%20Service%20of%20Ukraine.%2028%20January%202026.png?itok=Imnb1-VY"
+    }
+  ],
+  "ua_fire": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSm5veHmXwaBwPVmXUzDGRgcnBz4dh5Z-uuQGcSM4m7cg&s=10",
+      "full": "https://c.files.bbci.co.uk/147b/live/c32f0220-013f-11ef-9d91-5f9fdc721462.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyyvGNDzhKOhqr7dTlunqUwqe7DWn5zox9oKWC1JStbA&s=10",
+      "full": "https://icm.com.ua/wp-content/uploads/2025/04/ds3527_en.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSt_MbeeZGlOYT2sYLOlYU39aw01r03kDkf4kfYOBtQlA&s=10",
+      "full": "https://militarnyi.com/wp-content/uploads/2024/06/447291510_919998556593275_7632883133619680237_n-1.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvnmgQ8VqSD5_kb8yocbkyCTi9wMGFVjjOvfbKPlHtGw&s=10",
+      "full": "https://civil-protection-humanitarian-aid.ec.europa.eu/sites/default/files/styles/ewcms_metatag_image/public/2022-05/it_convoy_ucpm_ukraine_web_0.jpg?itok=kh1o76cz"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXnX2sH2Abc_prBubu48hjaldUdmfH8ccORqpiy41TJA&s=10",
+      "full": "https://ctif.org/sites/default/files/inline-images/PHOTO-2022-03-18-15-19-20.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZub3iwu0K1_PJhieZ6odPHlcsVa-1Jgw9aCaU1csy3A&s=10",
+      "full": "https://c8.alamy.com/comp/3A21C6C/kyiv-ukraine-march-10-2025-a-red-and-yellow-fire-truck-parked-in-a-urban-area-under-a-clear-sky-3A21C6C.jpg"
+    }
+  ],
+  "ua_police": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTAdlh0cEsDs-KnlRWBMA0edlLHeOb_dZYu4dl4ncOKQ&s=10",
+      "full": "https://euneighbourseast.eu/wp-content/uploads/2024/11/54107061363_6040db5e3d_k-e1730452790880.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfZ1UpEcpLFy2UZ58pDy71hLZ1NTbbjFcDiWXC_AvjVg&s=10",
+      "full": "https://i.ytimg.com/vi/ixbNRGV3asY/hqdefault.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRI93W2uJkOoIGYIqKYBYmPxc9ydBeAZ7AioEkwIlszGA&s=10",
+      "full": "https://euneighbourseast.eu/wp-content/uploads/2021/09/snimok-ekrana-2021-09-13-v-10.49.17-e1631526357411.png"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGYAlOpLGMSF6eEZesjuWMSBOhXn4tcvCEv2HSVtgKew&s=10",
+      "full": "https://2021-2025.state.gov/wp-content/uploads/2018/11/16-Ukraine-Police-Car.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtvZ0xiLDKaxguiABddBAD1dMbiVxf2xBPUYkyfiM_nw&s=10",
+      "full": "https://static.ukrinform.com/photos/2025_12/thumb_files/630_360_1764814644-257.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTVnyn5graGeDgDPyzQylHpHvIeTv-DU8u4EhJw-g8mKw&s=10",
+      "full": "https://www.atlanticcouncil.org/wp-content/uploads/2015/10/20151007Maratlarge-1024x679.jpg"
+    }
+  ]
+}
