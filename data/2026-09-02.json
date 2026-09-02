@@ -1,0 +1,80 @@
+{
+  "gb_ambulance": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5nBHZrxRxHUoi4GTXUh18KfyMKdPHYa-NaTBd2Ur4nA&s=10",
+      "full": "https://assets.publishing.service.gov.uk/media/6954f1e4e8f9a8d94d8d18ce/s960_new-ambulance-fleet-2025.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJlpMTCl2mQ8ytagVJuuUl52tl3TexG3Oi76uoIhdgNw&s=10",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/1/16/NHS_ambulance_rushing_London_SW10.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT6SKBDY8hQDFi67CSrNi0PmIydl0tNwJsTqmYZNfXu3g&s=10",
+      "full": "https://www.stem.it/wp-content/uploads/2025/09/16.09-Ambulanza-come-fatta-e-quali-tipologie-esistono-07.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKb53A4L-sIoABHZwoBYQncM8Ps0ZgK5KmiUUKJCRoWw&s=10",
+      "full": "https://emergencyservicestimes.com/wp-content/uploads/2024/02/EEAST-EVJPG-scaled.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQlItyxAem_HSZat0rSrjtow79vGst6pTWheHtWTlyHtg&s=10",
+      "full": "https://c.files.bbci.co.uk/5F9C/production/_125467442_microsoftteams-image-20.png"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTSmRCEqp65s7NjZq7EJR2N7hfgKGmo-p1NQDtpI4MaHg&s=10",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/c/c6/WMAS_Ambulance.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original"
+    }
+  ],
+  "gb_fire": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQHXTolZAnlWJTTrgAuJMPCQDDiCNrKieoxR1W27him4g&s",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/8/83/LFB_Dual_Pump_Ladder_IMG_7079.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRWYlU_ev8QzADhyXR_WoNzkErbzDUivbEMYgYfdddF1g&s=10",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/e/e1/Scottish_Fire_and_Rescue_Service_-_geograph.org.uk_-_5624246.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQspGRku_mxUd2I3-Gx3Yr-OxKMG2MgBBt_I8UGknSgzQ&s=10",
+      "full": "https://ichef.bbci.co.uk/news/1024/branded_news/2095/production/_125714380_2.67672453.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQOc0HWOX5iAVGkks6girk-964ZIexkrcty992oOw4NZA&s=10",
+      "full": "https://www.fireapparatusmagazine.com/wp-content/uploads/2022/07/Londons-electric-fire-truck.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZ0BhcOudwZ4mMocYXDOp4r7YXDzSvhKg0Nm6HfG4hTg&s=10",
+      "full": "https://i.ytimg.com/vi/6GqxhBRNuSQ/maxresdefault.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQxxTV5PA08ppFYLaZkR8hj41ZJVGmzK9M_Qj5Vo7CNrw&s",
+      "full": "https://www.london-fire.gov.uk/media/ytkb12j2/osc-lorry-resize.jpg"
+    }
+  ],
+  "gb_police": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRMGPBStj43rU6FQLO7-umu3UaOjwrO8RD2YBLMLzhF3A&s=10",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/4/46/Anti-Lock_Down_Protest_London_%2851137274958%29.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSSbc9IOQFSvv7A8YTi-xfC19D_gBHjUxx9cywRMDDKgw&s=10",
+      "full": "https://hips.hearstapps.com/hmg-prod/images/bmw-330d-police-interceptor-1644520121.jpeg?crop=0.8320395995050063xw:1xh;center,top&resize=1200:*"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJRFH0ugCZ4GhfcXD53uIFWySKQ5It3goAjJJsKYc9kQ&s=10",
+      "full": "https://www.carolenash.com/images/librariesprovider6/news-and-blogs/2017-09/metropolitan_police_car01-jpg.jpg?sfvrsn=2bd00ba1_0"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmngcN2HMU_UrxompRXGGOM_2dWfAerQXK37GpProsPg&s=10",
+      "full": "https://stellantis3.dam-broadcast.com/medias/domain12808/media107942/2382774-htj1jnifdy-whr.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU7-QUssFAzWg3QSe7_AFR2agJ-Pb7qtB-TEbzndPgNQ&s=10",
+      "full": "https://hips.hearstapps.com/hmg-prod/images/bmw-police-530d-1644519816.jpg?crop=1.00xw:0.989xh;0,0.0111xh&resize=980:*"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTWt7rFDreDMEijfIzy3VJRsbPxpIXkP8OBQfcMMASnhg&s=10",
+      "full": "https://www.lakesidegroup.co.uk/wp-content/uploads/2022/11/IMG_4886-3000x2592.jpg"
+    }
+  ]
+}
