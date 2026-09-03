@@ -1,0 +1,80 @@
+{
+  "us_ambulance": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS2YzyipYrQeDor77e5niuFGgldDPEGlNGlGrTyq4Yg-Q&s=10",
+      "full": "https://arvambulance.com/wp-content/uploads/2020/09/edited-ladue-side-shot-2-scaled-1-1024x777.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTANyE0IDUs1Dbbhw6OIcfol-Ebhkeru3wGX7biB-ZHnw&s=10",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Darien_EMS-Post_53.JPG/1280px-Darien_EMS-Post_53.JPG?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=thumbnail"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSe7WBctTSjN2dM4d76VIErO4EZnmAbw7B9jT163a8Arw&s=10",
+      "full": "https://arvambulance.com/wp-content/uploads/2020/08/cropped-mulvane-type-2.png"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4OCE5H8z4nvfKnFWxHyYE-3T6PzY3r88AfvPiTw6QqA&s=10",
+      "full": "https://media.defense.gov/2012/May/11/2000152616/-1/-1/0/120506-F-GU448-001.JPG"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTzs2qtyYvlBwiHy21l-nCYqNOW8zlxYinDG405ns-EBA&s=10",
+      "full": "https://revgroup.com/wp-content/uploads/2023/05/Leader.png"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQSKi6e7D4VCTA5rEtWitwYEs2kjTNvDqT9QhEEG0Nt1Q&s=10",
+      "full": "https://arvambulance.com/wp-content/uploads/2020/05/P1160006-scaled.jpg"
+    }
+  ],
+  "us_fire": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYj1MCxKmdIGPvkJSOiNrXffGK82dRy1JpSynuWvxCJQ&s=10",
+      "full": "https://www.piercemfg.com/hs-fs/hubfs/Blog/nfpa-1901-types-of-fire-trucks.jpg?width=1720&name=nfpa-1901-types-of-fire-trucks.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRU2VvI0k5L7UXSsNFV7oueVqgoTG3gwvwSsZo3DATBFw&s",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Seattle_Fire_Department_-_Ladder_6.jpg/250px-Seattle_Fire_Department_-_Ladder_6.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzjBHMd35ufeGQiuVDXEjbvVnlqecRGccf6eXR8kyeYA&s=10",
+      "full": "https://www.piercemfg.com/hs-fs/hubfs/Blog/type-1-fire-truck.jpeg?width=1600&name=type-1-fire-truck.jpeg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSY3egvBuqKeUGodutd5r887XuEgYez1snbG1PEoRCqOw&s=10",
+      "full": "https://www.greenbaypressgazette.com/gcdn/-mm-/7f367d95b9ddcafaebc6eb4349516ac985ff1519/c=0-123-5177-3048/local/-/media/GreenBay/2015/03/19/B9316662292Z.1_20150319155954_000_GT5A91S2Q.1-0.jpg?width=3200&height=1808&fit=crop&format=pjpg&auto=webp"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREAnIBv2FWrHZiHdkwqDOuLKeJ0tEYj6gS_Prv1bZojA&s=10",
+      "full": "https://api.army.mil/e2/c/images/2012/10/25/269590/max1200.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYHau1NzLjXHoiKSNAjoO_UWTrv4gl4OLJebEGO7UwUw&s=10",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/4/48/Highway_of_Heroes%2C_Trenton%2C_Ontario_0959_%284584769163%29.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original"
+    }
+  ],
+  "us_police": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQLBqwAuOr8uJpXLEHCNC3fo4rnC1hmrgOjK5SNZNd9RQ&s=10",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/b/b2/San_Francisco_%28CA%2C_USA%29%2C_Powell_Street%2C_Polizeifahrzeuge_--_2022_--_2917.jpg?utm_source=en.wikipedia.org&utm_campaign=index&utm_content=original"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTis0W5_kYMh_2hy4eh0kkNpK1wKRQ8z0QXuwHTdrqVuw&s=10",
+      "full": "https://cdn.motor1.com/images/mgl/rK32bO/s1/us-police-fleet.webp"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTyc1tX8pP8V13Bull3pcy_mC011AoaeT8x9RWTYoVxnQ&s=10",
+      "full": "https://i.insider.com/581cea49691e881b008b4ec7?width=700"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSBks0qbPVAM7U_Z_SHTzw8C3gkihVAfRaIeigJ-dzjwg&s=10",
+      "full": "https://i.insider.com/581cfcc946e27a1c008b4e6a?width=800&format=jpeg&auto=webp"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTGkHyVJyDLqppQehKcjdIzf6AbMm-zEss4kwEDAQQrgg&s=10",
+      "full": "https://www.ford.com/content/dam/brand_ford/en_us/brand/police/legacy/PIU_Placeholder_32.jpg/jcr:content/renditions/cq5dam.web.768.768.jpeg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR26KoqIYoBxpJWOHjVB_s6GOkcOF6GQpjEcQiENZiPrw&s=10",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Vancouver_Airport_-_Royal_Canadian_Mounted_Police_%281%29.jpg/250px-Vancouver_Airport_-_Royal_Canadian_Mounted_Police_%281%29.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail"
+    }
+  ]
+}
