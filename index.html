@@ -186,6 +186,12 @@
   }
   .map-zoom-btn.active { background: var(--amber); color: #fff; }
   .map-zoom-btn:active { opacity: .75; }
+  .map-attrib {
+    position: absolute; bottom: 8px; left: 8px; z-index: 1000;
+    background: rgba(255,255,255,.8); border-radius: 6px; padding: 2px 6px;
+    font-size: .6rem; color: var(--muted); line-height: 1.3;
+  }
+  .map-attrib a { color: inherit; }
 
   /* ── Vehicle cards ── */
   .vehicle-cards { width: 100%; display: flex; flex-direction: column; gap: 11px; padding: 16px 18px 0; }
@@ -302,6 +308,42 @@
   .lb-dot.active { background: #fff; }
 
   .attrib { text-align: center; font-size: .65rem; color: var(--muted); padding: 18px 16px 0; }
+
+  /* ── Secret country picker ── */
+  .secret-overlay {
+    display: none; position: fixed; inset: 0; z-index: 3000;
+    background: rgba(17,24,39,.55); align-items: center; justify-content: center; padding: 24px;
+  }
+  .secret-overlay.open { display: flex; }
+  .secret-card {
+    background: var(--surface); border-radius: var(--radius); padding: 24px;
+    width: 100%; max-width: 320px; text-align: center;
+  }
+  .secret-card h3 {
+    font-family: 'Nunito', sans-serif; font-size: 1rem; font-weight: 800;
+    margin-bottom: 14px; color: var(--text);
+  }
+  .secret-question {
+    font-family: 'Nunito', sans-serif; font-size: 1.6rem; font-weight: 900;
+    margin-bottom: 16px; color: var(--text);
+  }
+  .secret-input, .secret-select {
+    width: 100%; padding: 12px; border-radius: 10px; border: 1.5px solid var(--border);
+    font-size: 1rem; margin-bottom: 12px; font-family: 'Inter', sans-serif; text-align: center;
+    background: var(--surface); color: var(--text);
+  }
+  .secret-select { text-align: left; }
+  .secret-btn {
+    width: 100%; background: var(--amber); color: #fff; border: none; border-radius: 10px;
+    padding: 12px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: .95rem;
+    cursor: pointer; -webkit-tap-highlight-color: transparent;
+  }
+  .secret-btn:active { opacity: .85; }
+  .secret-cancel {
+    margin-top: 10px; background: none; border: none; color: var(--muted);
+    font-size: .8rem; cursor: pointer; padding: 6px; -webkit-tap-highlight-color: transparent;
+  }
+  .secret-error { color: var(--ambulance); font-size: .78rem; margin-bottom: 10px; min-height: 1em; }
 </style>
 </head>
 <body>
@@ -319,7 +361,7 @@
     <button class="tomorrow-btn" onclick="goTomorrow()"><span id="tomorrow-btn-label">Tomorrow</span> ›</button>
   </div>
   <div class="country-hero">
-    <div id="country-flag" class="country-flag-emoji"></div>
+    <div id="country-flag" class="country-flag-emoji" onclick="handleSecretTap()"></div>
     <div class="country-name" id="country-name"></div>
     <div class="capital-label" id="capital-label"></div>
     <div class="stats-row" id="stats-row"></div>
@@ -327,6 +369,7 @@
   </div>
   <div class="map-container">
     <div id="country-map"></div>
+    <div class="map-attrib">© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a></div>
     <div class="map-zoom-ctrl">
       <button class="map-zoom-btn" onclick="setMapZoom(2)" data-zoom="2">🌍</button>
       <button class="map-zoom-btn active" onclick="setMapZoom(4)" data-zoom="4">🗺</button>
@@ -384,6 +427,7 @@
   </div>
   <div class="map-container">
     <div id="tomorrow-map"></div>
+    <div class="map-attrib">© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a></div>
     <div class="map-zoom-ctrl">
       <button class="map-zoom-btn" onclick="setTomorrowMapZoom(2)" data-tzoom="2">🌍</button>
       <button class="map-zoom-btn active" onclick="setTomorrowMapZoom(4)" data-tzoom="4">🗺</button>
@@ -405,6 +449,25 @@
 </div>
 
 <button id="lang-toggle" class="lang-toggle" onclick="toggleLang()"></button>
+
+<!-- Secret country picker: tap the flag 7× quickly, then solve a multiplication to unlock -->
+<div id="secret-overlay" class="secret-overlay">
+  <div class="secret-card">
+    <div id="secret-step-math">
+      <h3>Quick check</h3>
+      <div class="secret-question" id="secret-question"></div>
+      <input type="number" inputmode="numeric" class="secret-input" id="secret-answer" placeholder="Answer">
+      <div class="secret-error" id="secret-error"></div>
+      <button class="secret-btn" onclick="checkSecretAnswer()">Submit</button>
+    </div>
+    <div id="secret-step-picker" style="display:none;">
+      <h3>Jump to a country</h3>
+      <select class="secret-select" id="secret-country-select"></select>
+      <button class="secret-btn" onclick="applySecretCountry()">View</button>
+    </div>
+    <button class="secret-cancel" onclick="closeSecretOverlay()">Cancel</button>
+  </div>
+</div>
 
 <script>
 // ─────────────────────────────────────────────
@@ -976,7 +1039,8 @@ function renderMap(containerId, country, mapRef, zoom) {
     scrollWheelZoom: false, doubleClickZoom: false,
     boxZoom: false, keyboard: false
   });
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', { maxZoom: 19 }).addTo(map);
+  const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+  L.tileLayer(tileUrl, { maxZoom: 19, subdomains: 'abc' }).addTo(map);
   L.circleMarker([country.capLat, country.capLng], {
     radius: 7, color: '#fff', weight: 2,
     fillColor: '#e08d00', fillOpacity: 1
@@ -1012,6 +1076,75 @@ let selectedCountry    = null;
 let currentVehicleType = null;
 let lightboxImages     = [];
 let lightboxIndex      = 0;
+
+// ─────────────────────────────────────────────
+// SECRET COUNTRY PICKER
+// Tap the flag 7 times within 2.5s to trigger a multiplication challenge.
+// Solving it opens a plain country dropdown — bypasses the daily rotation
+// without needing to fiddle with the date. Meant to be too fiddly/slow for
+// a young child to stumble into, not real security.
+// ─────────────────────────────────────────────
+let secretTapTimes = [];
+let secretAnswer   = null;
+
+function handleSecretTap() {
+  const now = Date.now();
+  secretTapTimes = secretTapTimes.filter(t => now - t < 2500);
+  secretTapTimes.push(now);
+  if (secretTapTimes.length >= 7) {
+    secretTapTimes = [];
+    openSecretChallenge();
+  }
+}
+
+function openSecretChallenge() {
+  const a = Math.floor(Math.random() * 12) + 7; // 7–18
+  const b = Math.floor(Math.random() * 12) + 7; // 7–18
+  secretAnswer = a * b;
+  document.getElementById('secret-question').textContent = `${a} × ${b} = ?`;
+  document.getElementById('secret-answer').value = '';
+  document.getElementById('secret-error').textContent = '';
+  document.getElementById('secret-step-math').style.display = '';
+  document.getElementById('secret-step-picker').style.display = 'none';
+  document.getElementById('secret-overlay').classList.add('open');
+  setTimeout(() => document.getElementById('secret-answer').focus(), 50);
+}
+
+function checkSecretAnswer() {
+  const val = parseInt(document.getElementById('secret-answer').value, 10);
+  if (val === secretAnswer) {
+    showSecretPicker();
+  } else {
+    // Wrong answer gets a fresh question rather than another try at the same one.
+    openSecretChallenge();
+    document.getElementById('secret-error').textContent = currentLang === 'fr' ? 'Pas tout à fait — réessaie.' : 'Not quite — try again.';
+  }
+}
+
+function showSecretPicker() {
+  const sorted = [...COUNTRIES].sort((a, b) => localizedCountryName(a).localeCompare(localizedCountryName(b)));
+  const select = document.getElementById('secret-country-select');
+  select.innerHTML = sorted.map(c => `<option value="${c.code}">${localizedCountryName(c)}</option>`).join('');
+  if (selectedCountry) select.value = selectedCountry.code;
+  document.getElementById('secret-step-math').style.display = 'none';
+  document.getElementById('secret-step-picker').style.display = '';
+}
+
+function applySecretCountry() {
+  const code = document.getElementById('secret-country-select').value;
+  const country = COUNTRIES.find(c => c.code === code);
+  if (!country) return;
+  selectedCountry = country;
+  renderCountryScreen();
+  document.getElementById('date-label').textContent += currentLang === 'fr' ? ' · aperçu' : ' · preview';
+  document.querySelectorAll('.day-pill').forEach(p => p.classList.remove('active'));
+  closeSecretOverlay();
+  showScreen('screen-country');
+}
+
+function closeSecretOverlay() {
+  document.getElementById('secret-overlay').classList.remove('open');
+}
 
 // ─────────────────────────────────────────────
 // DAY STRIP  (oldest left → today right)
@@ -1303,5 +1436,6 @@ function init() {
 }
 init();
 </script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "fb66fb71ba8a475a8f8f6cce654a20d6"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
