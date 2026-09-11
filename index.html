@@ -16,8 +16,8 @@
 -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
-<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<link href="https://unpkg.com/maplibre-gl@4/dist/maplibre-gl.css" rel="stylesheet"/>
+<script src="https://unpkg.com/maplibre-gl@4/dist/maplibre-gl.js"></script>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -167,9 +167,13 @@
     position: relative;
   }
   #country-map, #tomorrow-map { width: 100%; height: 100%; }
-  .leaflet-container { background: var(--surface2) !important; }
-  .leaflet-control-attribution { display: none !important; }
-  .leaflet-control-zoom { display: none !important; }
+  .maplibregl-map { background: var(--surface2) !important; }
+  .maplibregl-control-container { display: none !important; }
+  .maplibregl-ctrl-attrib, .maplibregl-ctrl-logo { display: none !important; }
+  .capital-marker {
+    width: 14px; height: 14px; border-radius: 50%;
+    background: #e08d00; border: 2px solid #fff; box-shadow: 0 1px 3px rgba(0,0,0,.35);
+  }
   /* Zoom level buttons overlaid on map */
   .map-zoom-ctrl {
     position: absolute; bottom: 8px; right: 8px; z-index: 1000;
@@ -1030,22 +1034,42 @@ let currentTomorrowMapZoom = 4;
 
 function renderMap(containerId, country, mapRef, zoom) {
   if (mapRef && mapRef.remove) mapRef.remove();
-  const el = document.getElementById(containerId);
-  delete el._leaflet_id;
-  const map = L.map(containerId, {
-    center: [country.capLat, country.capLng], zoom: zoom || currentMapZoom,
-    zoomControl: false, attributionControl: false,
-    dragging: false, touchZoom: false,
-    scrollWheelZoom: false, doubleClickZoom: false,
-    boxZoom: false, keyboard: false
+  const map = new maplibregl.Map({
+    container: containerId,
+    style: 'https://tiles.openfreemap.org/styles/liberty',
+    center: [country.capLng, country.capLat],
+    zoom: zoom || currentMapZoom,
+    interactive: false,
+    attributionControl: false
   });
-  const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-  L.tileLayer(tileUrl, { maxZoom: 19, subdomains: 'abc' }).addTo(map);
-  L.circleMarker([country.capLat, country.capLng], {
-    radius: 7, color: '#fff', weight: 2,
-    fillColor: '#e08d00', fillOpacity: 1
-  }).addTo(map);
+  map.on('load', () => {
+    applyMapLanguage(map, currentLang);
+    const marker = document.createElement('div');
+    marker.className = 'capital-marker';
+    new maplibregl.Marker({ element: marker })
+      .setLngLat([country.capLng, country.capLat])
+      .addTo(map);
+  });
   return map;
+}
+
+// Relabels every text layer in the style to the app's current language,
+// falling back to English, then to whatever local name the tile has —
+// vector tiles carry name:<lang> fields per place, unlike raster tiles
+// which bake one fixed script into the image.
+function applyMapLanguage(map, lang) {
+  const style = map.getStyle();
+  if (!style || !style.layers) return;
+  style.layers.forEach(layer => {
+    if (layer.layout && 'text-field' in layer.layout) {
+      map.setLayoutProperty(layer.id, 'text-field', [
+        'coalesce',
+        ['get', 'name:' + lang],
+        ['get', 'name:en'],
+        ['get', 'name']
+      ]);
+    }
+  });
 }
 
 function setMapZoom(zoom) {
@@ -1083,9 +1107,21 @@ let lightboxIndex      = 0;
 // Solving it opens a plain country dropdown — bypasses the daily rotation
 // without needing to fiddle with the date. Meant to be too fiddly/slow for
 // a young child to stumble into, not real security.
+// Once solved, the challenge is skipped for 5 minutes (per browser tab).
 // ─────────────────────────────────────────────
+const SECRET_UNLOCK_MS = 5 * 60 * 1000;
+const SECRET_UNLOCK_KEY = 'ev_secret_unlock_until';
 let secretTapTimes = [];
 let secretAnswer   = null;
+
+function secretUnlockedUntil() {
+  try { return parseInt(sessionStorage.getItem(SECRET_UNLOCK_KEY) || '0', 10); }
+  catch(e) { return 0; }
+}
+function markSecretUnlocked() {
+  try { sessionStorage.setItem(SECRET_UNLOCK_KEY, String(Date.now() + SECRET_UNLOCK_MS)); }
+  catch(e) { /* private browsing etc — just re-ask next time */ }
+}
 
 function handleSecretTap() {
   const now = Date.now();
@@ -1093,7 +1129,12 @@ function handleSecretTap() {
   secretTapTimes.push(now);
   if (secretTapTimes.length >= 7) {
     secretTapTimes = [];
-    openSecretChallenge();
+    if (now < secretUnlockedUntil()) {
+      document.getElementById('secret-overlay').classList.add('open');
+      showSecretPicker();
+    } else {
+      openSecretChallenge();
+    }
   }
 }
 
@@ -1113,6 +1154,7 @@ function openSecretChallenge() {
 function checkSecretAnswer() {
   const val = parseInt(document.getElementById('secret-answer').value, 10);
   if (val === secretAnswer) {
+    markSecretUnlocked();
     showSecretPicker();
   } else {
     // Wrong answer gets a fresh question rather than another try at the same one.
