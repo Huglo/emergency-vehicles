@@ -1,0 +1,80 @@
+{
+  "km_ambulance": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQc2SJ3gNvJJypYdGojgQbOZ30wbr_nEhlCsnRFGwH0IQ&s=10",
+      "full": "https://aa.unfpa.org/sites/default/files/home-banner-news/ambulance_homepage.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTh9MbmtUI4yHbCRTjdPySWRzLX6zGGKJfq5UIDvL3gkA&s=10",
+      "full": "https://i.ebayimg.com/images/g/odUAAOSwnCtdzhgQ/s-l400.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSjBL0BSgo7BJ0ldZ-_8fSccA3AvrxdOgjg2JvaeJSQ0Q&s",
+      "full": "https://m.media-amazon.com/images/I/71yR7tfUptL._AC_SX679_.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQArJoRRrfj42PCoRadGyhwn0zRGoGomkikqOTLAgDF0g&s=10",
+      "full": "https://www.reuters.com/resizer/v2/https%3A%2F%2Farchive-images.prod.global.a201836.reutersmedia.net%2F2009%2F07%2F02%2F2009-07-02T145519Z_04_GM1E57219AR01_RTRRPP_0_COMOROS-CRASH.JPG?auth=bbb062deb8a9929678e6cd4fb4bd30add071894355bff66a045f5cf1ddc5a5b9&width=1920&quality=80"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTank-xx0lMtS5l63GRw_uq4GJY-ecoGxoXPh8cXngAmQ&s=10",
+      "full": "https://www.fireapparatusmagazine.com/wp-content/uploads/2023/09/Arnold-Palmer-Hospital.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRklT75EL7PClbKwxsRS0TayZrPTHZ2vWWlsE8hoE9_SQ&s",
+      "full": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=1375265021292229"
+    }
+  ],
+  "km_fire": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFs72XK613qB-PYmhLUvvR1tPlX14h61LIOlJqzHGjLA&s=10",
+      "full": "https://i.ebayimg.com/images/g/5C0AAOSwY0hZqe5S/s-l1200.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRvjbPQ0huF_PjRaRtNfWW8i9jp-7hrClcaBnHZe3eT3A&s=10",
+      "full": "https://lookaside.instagram.com/seo/google_widget/crawler/?media_id=3380114963261586585"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQ8Gsc3fNnFG6rdilbortKAWVOHpKspQTC5D9sIatyvg&s=10",
+      "full": "https://img.firehouse.com/files/base/cygnus/fhc/image/2024/03/65ef81ee6db9d2001f0c397d-unknown1600x1151.png?auto=format,compress&fit=fill&fill=blur&w=1200&h=630"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTKcU-SrB8mrfK6smGZaosG8kbJRPf6oUGhZK8qGyT7WQ&s=10",
+      "full": "https://www.comox.ca/sites/default/files/2022-04/Tower%2035_Comox%20Fire.png"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3Ws5rZZRpiObRHcnVNTmzEzTy3y-ADVpNqDraavFhDw&s=10",
+      "full": "https://lookaside.instagram.com/seo/google_widget/crawler/?media_id=3787716096125184299"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRwthzY7wN8_QVJB-Gi8eLssYpGxaxz3HKJCTxURg9zYA&s=10",
+      "full": "https://img.firehouse.com/files/base/cygnus/fhc/image/2011/11/IMG_10619823.png?auto=format,compress&fit=fill&fill=blur&w=1200&h=630"
+    }
+  ],
+  "km_police": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQWB1h-NhiY_ifnCpzCUHfstcBZQoa5kjxX2N-IF2mIgg&s=10",
+      "full": "https://assets.bwbx.io/images/users/iqjWHBFdfxIU/iJ77gVKenoW4/v1/-1x-1.webp"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTHa2Ybnk8ptbX0luzOsC4yCrvDEHZ5hCcWrjLjK-Dmvw&s=10",
+      "full": "https://m.media-amazon.com/images/I/71rwpHHzrrL._AC_SX569_.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRI4jg7t7qgFcqzB55Da1UgocSWsLrzmDy4Okm9BISGyw&s=10",
+      "full": "https://i5.walmartimages.com/asr/bc42e463-cbc6-4e31-82ba-078a916ae90f_1.8c2c501b56d7759aa1db444ea21f770b.jpeg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQYDD05EOjYJIK_zuK-Rv-fnXsYOVKb5rQVeluNtHHAMg&s=10",
+      "full": "https://hips.hearstapps.com/hmg-prod/images/2002-chevrolet-camaro-z28-img-7723-1-94025-654e485fa26f0.jpeg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRlhspTrlpHe2yxVfaWonji1fLnhsPodj5PjBq0GvF2DQ&s=10",
+      "full": "https://preview.redd.it/kcmo-police-cruiser-v0-fjuqydrm1zqf1.jpeg?width=1080&crop=smart&auto=webp&s=56c0f463d1736e83c6c771bd9c1517a0a4ecc5ae"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTofzRS_epHCpgLfY7z6k8X5a-d2aL3MrSTVtrIWI8R4w&s=10",
+      "full": "https://m.media-amazon.com/images/I/81LRm221SXL._AC_SL1500_.jpg"
+    }
+  ]
+}
