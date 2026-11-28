@@ -1,0 +1,80 @@
+{
+  "is_ambulance": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQGkCRkMN-heiovfZqpuWB98fqy9_NiKkUlWRtfSnPVFA&s=10",
+      "full": "https://www.icelandreview.com/wp-content/uploads/2020/06/ambulances.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS9eyD60boo7Ao4X1ouJzp_HDhdT5eRoa-sJkGuR4_-Cw&s=10",
+      "full": "https://www.raudikrossinn.is/media/gvmgsvyq/sjukrabill-899x420.jpg?rxy=0.3633228840125392,0.5140282705903194&width=860&height=860&v=1dd0eccdcef4b10&format=webp"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQJFOmxmg9cKd4u35nlrL5ONyRIz0ext1CLdn-M6Ass5A&s=10",
+      "full": "https://thumb.wikimedia.org/wikipedia/commons/thumb/9/97/Ambulance_Iceland_Reykjav%C3%ADk.jpg/250px-Ambulance_Iceland_Reykjav%C3%ADk.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdBYv_3seK9A-cy9qCMKvknLG3KZ3MV4Il_UZh64fW_g&s=10",
+      "full": "https://thumb.wikimedia.org/wikipedia/commons/thumb/3/30/Icelandic_ambulance.jpg/250px-Icelandic_ambulance.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSfTaknJyTCcXKRE6TabQF9OcNJs2Plvakj-ItWC4_3uQ&s=10",
+      "full": "https://i.ytimg.com/vi/VmSj7mFndWM/maxresdefault.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRBMVpxrcTUXTOm4j63KVdok4Sj6KZllGNbvLBwZz2Zog&s=10",
+      "full": "https://thumb.wikimedia.org/wikipedia/commons/thumb/2/20/Rescue_vehicle_Iceland_Heimaey.jpg/250px-Rescue_vehicle_Iceland_Heimaey.jpg?utm_source=en.wikipedia.org&utm_campaign=parser&utm_content=thumbnail"
+    }
+  ],
+  "is_fire": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-OH46O2Qterz6QziACCGQ_Kj2gYZUS01YLzVxdpZAAw&s=10",
+      "full": "https://brontoskylift.com/wp-content/uploads/2024/04/DJI_20240419120622_0150_D-scaled.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQU6MWs-y_8l9lBtQNZG9hrpXl5my8YfA6buhl2i9lNlQ&s=10",
+      "full": "https://s3-eu-west-1.amazonaws.com/fire-engine-photos.com/60.jpg?r="
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTp5bxsn_og2djjhw0NRodP--H3EhAN8uOHIVOySzEuBA&s=10",
+      "full": "https://brontoskylift.com/wp-content/uploads/2024/04/bronto-worldwide-reykjavik-fire-rescue-2.jpeg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPQDYYcyIweg8R6gBiJIBZEsFW-rQmqSESrfyvh40v1Q&s=10",
+      "full": "https://c.arvakur.is/frimg/1/35/20/1352067.jpg"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSl6Qt1rOaf0Abr88CxgnzFx6NoOQUJwsPxzsVvde1snw&s=10",
+      "full": "https://lookaside.fbsbx.com/lookaside/crawler/media/?media_id=2538242932919240"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQKkGmqNjs5w5QLqh_vZCM5utnrldCzxuY8jvS2_1gMg&s=10",
+      "full": "https://www.icelandreview.com/wp-content/uploads/2023/02/DSF7215-scaled.jpg"
+    }
+  ],
+  "is_police": [
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRs4rPsapKdDqY3W_WwLVxVfFuzxf4Df4iVighXWlPxdg&s=10",
+      "full": "https://lookaside.instagram.com/seo/google_widget/crawler/?media_id=3719941628392670159"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRB8NRaT8t55NRpRYs1xmE0qKaiXmgZ5ojGCMiozg81vA&s=10",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Police_car_Iceland.jpg?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLFCyk2c5qOJPuZBTW-qk2Z5llcGqPxVFWyZveKBc6lQ&s=10",
+      "full": "https://lookaside.instagram.com/seo/google_widget/crawler/?media_id=3719941628384257096"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSOz_SaRQxMwmzKIftkZMIO8krStnvwlMgjwcL7gcsDmQ&s=10",
+      "full": "https://upload.wikimedia.org/wikipedia/commons/c/c5/Police_car_of_Iceland_01.JPG?utm_source=commons.wikimedia.org&utm_campaign=index&utm_content=original"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKlUrLDJkS3-evJ6rLEnrN-7kTdvfw_sAKA-MJWWahuA&s=10",
+      "full": "https://preview.redd.it/all-of-the-american-vehicles-that-the-icelandic-police-use-v0-7ezhr6bjw71g1.jpeg?auto=webp&s=649d4a4f510a850e4f402c5ab1a99d78ce75a53b"
+    },
+    {
+      "thumb": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSlxbxrAW7X-6cSYzo55ejWR0uPXfJ2ZVlavD_Ue2YLcA&s=10",
+      "full": "https://www.hertz.is/media/sites/3/2024/03/Iceland-police.jpg"
+    }
+  ]
+}
